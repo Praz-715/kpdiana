@@ -76,7 +76,7 @@
                             </div>
                         </li>
                         <li><a href="9-Dashboard-BarangMasuk .html" class="active"><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
                         <li><a href="" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
@@ -147,7 +147,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>TR-1</td>
+                                                <td><a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="TR-1,20 Juni 2021,1.000.000">TR-1</a></td>
                                                 <td>20 Juni 2021</td>
                                                 <td>1.000.000</td>
                                             </tr>
@@ -178,43 +178,116 @@
 
                                         </tbody>
                                     </table>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLabel">Form Detail Pembelian</h3>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="kambing d-inline">
+                                                                <h4 class="d-inline">No Transaksi:
+                                                                </h4>
+                                                                <div class="d-inline" id="notrans">
+                                                                </div>
+                                                            </div>
+                                                            <h4>Tanggal Transaksi:
+                                                                <div id="tgltrans"></div>
+                                                            </h4>
+                                                            <table class="table table-bordered ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>First Name</th>
+                                                                        <th>Last Name</th>
+                                                                        <th>Username</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>Steve</td>
+                                                                        <td>Jobs</td>
+                                                                        <td>@steve</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Simon</td>
+                                                                        <td>Philips</td>
+                                                                        <td>@simon</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Jane</td>
+                                                                        <td>Doe</td>
+                                                                        <td>@jane</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
 
-                                    <!-- END TABLE STRIPED -->
+                                                    </div>
+                                                    <!-- <div class="modal-footer ">
+                                                        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+                                                        <button type="button " class="btn btn-primary ">Send message</button>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- END TABLE STRIPED -->
+                                    </div>
                                 </div>
+
                             </div>
-
                         </div>
+                        <!-- END OVERVIEW -->
+
+
+
                     </div>
-                    <!-- END OVERVIEW -->
-
-
-
                 </div>
+                <!-- END MAIN CONTENT -->
             </div>
-            <!-- END MAIN CONTENT -->
+            <!-- END MAIN -->
+            <div class="clearfix "></div>
+            <footer>
+                <div class="container-fluid ">
+                    <p class="copyright ">&copy; 2017 <a href="https://www.themeineed.com " target="_blank ">Theme I Need</a>. All Rights Reserved.</p>
+                </div>
+            </footer>
         </div>
-        <!-- END MAIN -->
-        <div class="clearfix"></div>
-        <footer>
-            <div class="container-fluid">
-                <p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </div>
-    <!-- END WRAPPER -->
-    <!-- Javascript -->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
-    <script src="assets/scripts/klorofil-common.js"></script>
-    <script src="assets/vendor/datatables/datatables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#table_barang').DataTable();
-        });
-    </script>
+        <!-- END WRAPPER -->
+        <!-- Javascript -->
+        <script src="assets/vendor/jquery/jquery.min.js "></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.min.js "></script>
+        <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js "></script>
+        <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js "></script>
+        <script src="assets/vendor/chartist/js/chartist.min.js "></script>
+        <script src="assets/scripts/klorofil-common.js "></script>
+        <script src="assets/vendor/datatables/datatables.min.js "></script>
+        <script>
+            $(document).ready(function() {
+                $('#table_barang').DataTable();
+            });
+            $('#exampleModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                var baru = recipient.split(", ")
+                console.log(baru)
+                    // modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('#notrans').text(baru[0])
+                modal.find('#tgltrans').text(baru[1])
+            })
+        </script>
 
 </body>
 

@@ -64,9 +64,9 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="1-Dashboard-Home.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
-                            <a href="#subPages" data-toggle="collapse" class="collapsed active"><i class="lnr lnr-file-empty"></i>
+                            <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
@@ -76,15 +76,15 @@
                             </div>
                         </li>
                         <li><a href="9-Dashboard-BarangMasuk .html" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.html" class="active"><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
                         <li><a href="" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="">Pembelian</a></li>
-                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Penjualan</a></li>
+                                    <li><a href="" class="">Penjualan</a></li>
+                                    <li><a href="" class="">Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -108,7 +108,7 @@
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
                                         <li class="breadcrumb-item">Data Master</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Penjualan</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Barang</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -116,183 +116,161 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary"> <i class="fas fa-plus"></i> Tambah Data</button>
-                                    <h2>Data Barang</h2>
+                                    <span class="label label-success">Filter data berdasarkan tanggal</span>
+                                    <div class="row">
+                                        <form action="" method="get">
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="date" name="tgl1" id="tgl1">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="date" name="tgl1" id="tgl1">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-success">Cari</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <br>
+                                    <a href="4-Dashboard-Penjualan-transaksi.html" class="btn btn-primary"> <i class="fas fa-plus"></i> Tambah Data</a>
+                                    <h2>Data Penjualan</h2>
                                     <!-- TABLE STRIPED -->
 
                                     <table id="table_barang" class="display">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Kode Barang</th>
-                                                <th>Nama Barang</th>
-                                                <th>Unit</th>
-                                                <th>Harga Beli</th>
-                                                <th>Harga Jual</th>
-                                                <th>Action</th>
+                                                <th>No Transaki</th>
+                                                <th>Tanggal Transaksi</th>
+                                                <th>Nama Pelanggan</th>
+                                                <th>Total Harga</th>
+                                                <th>Biaya Kirim</th>
+                                                <th>Grand Total</th>
+                                                <th>Print</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Merah</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
+                                                <td><a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="TR-1,20 Juni 2021,1.000.000">TR-1</a></td>
+                                                <td>20 Juni 2021</td>
+                                                <td>Iqbal</td>
+                                                <td>1.000.000</td>
+                                                <td>100.000</td>
+                                                <td>1.100.000</td>
+                                                <td><a href=""><i class="fas fa-print"></i></a></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Putih Kating</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 13.000</td>
-                                                <td>Rp 32.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Putih Banci</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Bombay</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kentang Dieng</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kacang Hijau</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kacang Tanah</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Lada</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Jahe</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Ketumbar</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
+
 
                                         </tbody>
                                     </table>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="exampleModalLabel">Form Detail Penjualan</h3>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="kambing d-inline">
+                                                                <h4 class="d-inline">No Transaksi:
+                                                                </h4>
+                                                                <div class="d-inline" id="notrans">
+                                                                </div>
+                                                            </div>
+                                                            <h4>Tanggal Transaksi:
+                                                                <div id="tgltrans"></div>
+                                                            </h4>
+                                                            <table class="table table-bordered ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>First Name</th>
+                                                                        <th>Last Name</th>
+                                                                        <th>Username</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>Steve</td>
+                                                                        <td>Jobs</td>
+                                                                        <td>@steve</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Simon</td>
+                                                                        <td>Philips</td>
+                                                                        <td>@simon</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Jane</td>
+                                                                        <td>Doe</td>
+                                                                        <td>@jane</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
 
-                                    <!-- END TABLE STRIPED -->
+                                                    </div>
+                                                    <!-- <div class="modal-footer ">
+                                                        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+                                                        <button type="button " class="btn btn-primary ">Send message</button>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- END TABLE STRIPED -->
+                                    </div>
                                 </div>
+
                             </div>
-
                         </div>
+                        <!-- END OVERVIEW -->
+
+
+
                     </div>
-                    <!-- END OVERVIEW -->
-
-
-
                 </div>
+                <!-- END MAIN CONTENT -->
             </div>
-            <!-- END MAIN CONTENT -->
+            <!-- END MAIN -->
+            <div class="clearfix "></div>
+            <footer>
+                <div class="container-fluid ">
+                    <p class="copyright ">&copy; 2017 <a href="https://www.themeineed.com " target="_blank ">Theme I Need</a>. All Rights Reserved.</p>
+                </div>
+            </footer>
         </div>
-        <!-- END MAIN -->
-        <div class="clearfix"></div>
-        <footer>
-            <div class="container-fluid">
-                <p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </div>
-    <!-- END WRAPPER -->
-    <!-- Javascript -->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
-    <script src="assets/scripts/klorofil-common.js"></script>
-    <script src="assets/vendor/datatables/datatables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#table_barang').DataTable();
-        });
-    </script>
+        <!-- END WRAPPER -->
+        <!-- Javascript -->
+        <script src="assets/vendor/jquery/jquery.min.js "></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.min.js "></script>
+        <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js "></script>
+        <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js "></script>
+        <script src="assets/vendor/chartist/js/chartist.min.js "></script>
+        <script src="assets/scripts/klorofil-common.js "></script>
+        <script src="assets/vendor/datatables/datatables.min.js "></script>
+        <script>
+            $(document).ready(function() {
+                $('#table_barang').DataTable();
+            });
+            $('#exampleModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                var baru = recipient.split(", ")
+                console.log(baru)
+                    // modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('#notrans').text(baru[0])
+                modal.find('#tgltrans').text(baru[1])
+            })
+        </script>
 
 </body>
 
