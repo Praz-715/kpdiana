@@ -20,7 +20,7 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/vendor/datatables/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
 
 
 </head>
@@ -64,9 +64,9 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="1-Dashboard-Home.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
-                            <a href="#subPages" data-toggle="collapse" class="collapsed active"><i class="lnr lnr-file-empty"></i>
+                            <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
@@ -75,16 +75,16 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="9-Dashboard-BarangMasuk .html" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.html" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
-                            <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
+                            <a href="#Laporan" data-toggle="collapse" class="collapsed active"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subPages" class="collapse ">
+                            <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="" class="">Pembelian</a></li>
-                                    <li><a href="" class="">Penjualan</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="active">Laporan Pembelian</a></li>
+                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -107,8 +107,8 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
-                                        <li class="breadcrumb-item">Data Master</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Barang</li>
+                                        <li class="breadcrumb-item">Laporan</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Laporan Pembelian</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -116,148 +116,27 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary"> <i class="fas fa-plus"></i> Tambah Data</button>
-                                    <h2>Data Barang</h2>
-                                    <!-- TABLE STRIPED -->
-
-                                    <table id="table_barang" class="display">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Kode Barang</th>
-                                                <th>Nama Barang</th>
-                                                <th>Unit</th>
-                                                <th>Harga Beli</th>
-                                                <th>Harga Jual</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Merah</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Putih Kating</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 13.000</td>
-                                                <td>Rp 32.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Putih Banci</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Bawang Bombay</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kentang Dieng</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kacang Hijau</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Kacang Tanah</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Lada</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Jahe</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>SLM-BWM</td>
-                                                <td>Ketumbar</td>
-                                                <td>1 Kg</td>
-                                                <td>Rp 15.000</td>
-                                                <td>Rp 35.000</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-
-                                    <!-- END TABLE STRIPED -->
+                                    <h3>Laporan Pembelian</h3>
+                                    <h4>Berdasarkan</h4>
+                                    <form action="" method="get">
+                                        <label class="fancy-radio">
+                                            <input name="gender" value="male" type="radio">
+                                            <span><i></i>Semua data</span>
+                                        </label>
+                                        <label class="fancy-radio">
+                                            <input name="gender" value="female" type="radio">
+                                            <span><i></i>Berdasarkan Tanggal</span>
+                                        </label>
+                                        <div class="form-group">
+                                            <label for="daritgl">Dari Tanggal</label>
+                                            <input type="text" name="daritgl" id="datepicker1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sampaitgl">Sampai Tanggal</label>
+                                            <input type="text" name="sampaitgl" id="datepicker2">
+                                        </div>
+                                        <button class="btn btn-success" type="submit">Tampilkan</button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -287,10 +166,11 @@
     <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="assets/scripts/klorofil-common.js"></script>
-    <script src="assets/vendor/datatables/datatables.min.js"></script>
+    <script src="assets/scripts/jquery-ui.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#table_barang').DataTable();
+        $(function() {
+            $("#datepicker1").datepicker();
+            $("#datepicker2").datepicker();
         });
     </script>
 
