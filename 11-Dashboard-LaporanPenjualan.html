@@ -108,7 +108,7 @@
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
                                         <li class="breadcrumb-item">Laporan</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Laporan Pembelian</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -120,21 +120,24 @@
                                     <h4>Berdasarkan</h4>
                                     <form action="" method="get">
                                         <label class="fancy-radio">
-                                            <input name="gender" value="male" type="radio">
+                                            <input id="semuadata" name="datanya" value="semuadata" type="radio">
                                             <span><i></i>Semua data</span>
                                         </label>
                                         <label class="fancy-radio">
-                                            <input name="gender" value="female" type="radio">
-                                            <span><i></i>Berdasarkan Tanggal</span>
+                                            <input id="berdasarkantanggal" name="datanya" value="berdasarkantanggal" type="radio">
+                                            <span><i></i>Tanggal</span>
                                         </label>
-                                        <div class="form-group">
-                                            <label for="daritgl">Dari Tanggal</label>
-                                            <input type="text" name="daritgl" id="datepicker1">
+                                        <div class="fromto" style="display: none;">
+                                            <div class="form-group">
+                                                <label for="daritgl">Dari Tanggal</label>
+                                                <input type="text" name="daritgl" id="from">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sampaitgl">Sampai Tanggal</label>
+                                                <input type="text" name="sampaitgl" id="to">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="sampaitgl">Sampai Tanggal</label>
-                                            <input type="text" name="sampaitgl" id="datepicker2">
-                                        </div>
+
                                         <button class="btn btn-success" type="submit">Tampilkan</button>
                                     </form>
                                 </div>
@@ -169,10 +172,44 @@
     <script src="assets/scripts/jquery-ui.js"></script>
     <script>
         $(function() {
-            $("#datepicker1").datepicker();
-            $("#datepicker2").datepicker();
+            var dateFormat = "mm/dd/yy",
+                from = $("#from")
+                .datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1
+                })
+                .on("change", function() {
+                    to.datepicker("option", "minDate", getDate(this));
+                }),
+                to = $("#to").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1
+                })
+                .on("change", function() {
+                    from.datepicker("option", "maxDate", getDate(this));
+                });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+            $("#berdasarkantanggal").click(function() {
+                $(".fromto").show();
+            });
+            $("#semuadata").click(function() {
+                $(".fromto").hide();
+            });
         });
     </script>
+
 
 </body>
 
