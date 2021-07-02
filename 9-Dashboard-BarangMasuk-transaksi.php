@@ -1,23 +1,55 @@
 <?php
 
 session_start();
+// $_SESSION['data']=  null;
 require 'functions/functions-pelanggan.php';
 $lastkodetransaksi = (int) explode("-",query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1")[0]['kode_trans_masuk'])[1] + 1;
 $daftarbarang = query("SELECT * FROM identitas_barang");
 $daftarbarangjs = json_encode($daftarbarang);
 
-if(isset($_POST['add'])){
-    echo json_encode($_POST);die;
+
+$a = $_SESSION['data'];
+
+function getTotal(){
+    global $a;
+    if(isset($a['isi'])){
+
+        $_SESSION['data']['total'] = 0;
+        for($i=0;$i<count($a['isi']);$i++){
+            $_SESSION['data']['total'] += $_SESSION['data']['isi'][$i]['harga'];
+            // var_dump($_SESSION['data']['total']);
+        }
+    }
+    // echo json_encode($a);die;
 }
 
+if(isset($_POST['add'])){
 
-$data1 = array("nama"=>"teguh","status"=>"ganteng","umur"=>"22");
-$data2 = array("nama"=>"ferdi","status"=>"playboy","umur"=>"30");
+    if(is_null($a)){
+        $_SESSION['data']['isi'][] = $_POST;
+        $_SESSION['data']['total'] = (int)$_POST['harga'];
+        getTotal();
+    }else{
+        if (in_array($_POST['barang'], array_column($a['isi'], "barang") )){
+            $find = array_search($_POST['barang'], array_column($a['isi'], "barang") );
+            $_SESSION['data']['isi'][$find]['qt'] += $_POST['qt'];
+            $_SESSION['data']['isi'][$find]['harga'] = (int)$_SESSION['data']['isi'][$find]['qt'] * $_SESSION['data']['isi'][$find]['subharga'];
+        }else{
+            $_SESSION['data']['isi'][] = $_POST;
+        }
 
-$_SESSION['data'][] = $data1;
-$_SESSION['data'][] = $data2;
-$data = json_encode($_SESSION['data']);
-// echo $lastkodetransaksi;die;
+        getTotal();  
+    }
+    // echo json_encode($_SESSION['data']);die;
+    // echo $find;die;
+}
+
+getTotal();
+// die;
+// var_dump(array_search("BR-2", $a)) ;die;
+// echo json_encode($a);die;
+// var_dump($a);die;
+// var_dump(array_search("BR-1", array_column($a, "barang") )) ;die;
 
 ?>
 
@@ -26,7 +58,7 @@ $data = json_encode($_SESSION['data']);
 <html lang="en">
 
 <head>
-    <title>Dashboard-Home</title>
+    <title>Transaksi Barang Masuk</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -225,9 +257,22 @@ $data = json_encode($_SESSION['data']);
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php if(isset($_SESSION['data']['isi'])): ?>
+                                                    <?php foreach($_SESSION['data']['isi'] as $data): ?>
+                                                        <tr>
+                                                            <td><?= $data['barang'] ?></td>
+                                                            <td><?= $data['namabarang'] ?></td>
+                                                            <td><?= $data['qt'] ?></td>
+                                                            <td>Kg</td>
+                                                            <td><?= $data['subharga'] ?></td>
+                                                            <td><?= $data['harga'] ?></td>
+                                                            <td><a href="" id="hapussebagian">Hapus</a></td>
+                                                        </tr>
+                                                    <?php endforeach ?>
+                                                <?php endif ?>
                                                 <tr>
                                                     <td colspan="5">Total harga keseluruhan</td>
-                                                    <td colspan="2" id="totalhargakeseluruhan">8.500.000</td>
+                                                    <td colspan="2" id="totalhargakeseluruhan"><?= $_SESSION['data']['total'] ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8"><button class="btn btn-block btn-success" type="submit">Simpan</button></td>
@@ -237,109 +282,7 @@ $data = json_encode($_SESSION['data']);
                                     </form>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <h2>Transaksi Barang Masuk</h2>
-
-                                    <div class="row">
-                                        <form action="" method="post">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Nomor Transaksi</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi" value="TRBM-<?= $lastkodetransaksi ?>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="tgltr">Tanggal Transaksi</label>
-                                                    <input class="form-control" type="text" name="tgltr" id="tgltr">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="barang">Nama Barang</label>
-                                                    <select id="barang" name="barang" class="custom-select form-control">
-                                                        <option selected hidden>Pilih salah satu</option>
-                                                        <?php foreach($daftarbarang as $barang): ?>
-                                                            <option value="<?= $barang['Kode_Barang'] ?>"><?= $barang['Nama_Barang'] ?></option>
-                                                        <?php endforeach ?>
-                                                    </select>                                                
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Tempat Beli</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Quantity</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Unit</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Harga per Unit</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="notransaksi">Total Harga</label>
-                                                    <input class="form-control" type="text" name="notransaksi" id="notransaksi">
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-primary btn-block" type="submit">Tambahkan</button>
-                                        </form>
-                                    </div>
-                                    <h2>Konfirmasi Transaksi Masuk</h2>
-                                    <!-- BORDERED TABLE -->
-                                    <table class="table table-bordered">
-                                        <form action="" method="post">
-                                            <thead>
-                                                <tr>
-                                                    <th>Kode Barang</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Qt</th>
-                                                    <th>Unit</th>
-                                                    <th>Tempat Beli</th>
-                                                    <th>Harga per Unit</th>
-                                                    <th>Total Harga</th>
-                                                    <th><a href="">Hapus Semua</a></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>TR-1</td>
-                                                    <td>Bawang Merah</td>
-                                                    <td>100</td>
-                                                    <td>Kg</td>
-                                                    <td>Aneka Pangan</td>
-                                                    <td>35.000</td>
-                                                    <td>3.500.000</td>
-                                                    <td><a href="">hapus</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>TR-2</td>
-                                                    <td>Bawang Putih</td>
-                                                    <td>500</td>
-                                                    <td>Kg</td>
-                                                    <td>Aneka Pangan</td>
-                                                    <td>10.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td><a href="">hapus</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="6">Total harga keseluruhan</td>
-                                                    <td colspan="2">8.500.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="8"><button class="btn btn-block btn-success" type="submit">Simpan</button></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </form>
-                                    </table>
-
-                                    <!-- END BORDERED TABLE -->
-                                </div>
-                            </div>
+                            
 
                         </div>
                     </div>
@@ -394,6 +337,7 @@ $data = json_encode($_SESSION['data']);
                 // alert(subharga);
                 $('#harga').val(qt * subharga);
             });
+
             
         });
         $( function() {
