@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+
 // $_SESSION['data']=  null;
 require 'functions/functions-pelanggan.php';
 $lastkodetransaksi = (int) explode("-",query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1")[0]['kode_trans_masuk'])[1] + 1;
@@ -11,12 +12,11 @@ $daftarbarangjs = json_encode($daftarbarang);
 $a = $_SESSION['data'];
 
 function getTotal(){
-    global $a;
-    if(isset($a['isi'])){
+    if(isset($_SESSION['data']['isi'])){
 
         $_SESSION['data']['total'] = 0;
-        for($i=0;$i<count($a['isi']);$i++){
-            $_SESSION['data']['total'] += $_SESSION['data']['isi'][$i]['harga'];
+        for($i=0;$i<count($_SESSION['data']['isi']);$i++){
+            $_SESSION['data']['total'] += (int)$_SESSION['data']['isi'][$i]['harga'];
             // var_dump($_SESSION['data']['total']);
         }
     }
@@ -25,17 +25,18 @@ function getTotal(){
 
 if(isset($_POST['add'])){
 
-    if(is_null($a)){
+    if(is_null($_SESSION['data'])){
         $_SESSION['data']['isi'][] = $_POST;
         $_SESSION['data']['total'] = (int)$_POST['harga'];
         getTotal();
     }else{
-        if (in_array($_POST['barang'], array_column($a['isi'], "barang") )){
-            $find = array_search($_POST['barang'], array_column($a['isi'], "barang") );
+        if (in_array($_POST['barang'], array_column($_SESSION['data']['isi'], "barang") )){
+            $find = array_search($_POST['barang'], array_column($_SESSION['data']['isi'], "barang") );
             $_SESSION['data']['isi'][$find]['qt'] += $_POST['qt'];
-            $_SESSION['data']['isi'][$find]['harga'] = (int)$_SESSION['data']['isi'][$find]['qt'] * $_SESSION['data']['isi'][$find]['subharga'];
+            $_SESSION['data']['isi'][$find]['harga'] = (int)$_SESSION['data']['isi'][$find]['qt'] * (int)$_SESSION['data']['isi'][$find]['subharga'];
         }else{
             $_SESSION['data']['isi'][] = $_POST;
+            getTotal();
         }
 
         getTotal();  
@@ -44,10 +45,51 @@ if(isset($_POST['add'])){
     // echo $find;die;
 }
 
+if(isset($_POST['btnhapus'])){
+    $hapus = $_POST['btnhapus'];
+    $find = (int)array_search($hapus, array_column($_SESSION['data']['isi'], "barang") );
+    // unset($_SESSION['data']['isi'][$find]);
+    array_splice($_SESSION['data']['isi'], $find, $find == 0? 1 : $find);
+    
+    // echo json_encode($_SESSION['data']);die;
+    getTotal();
+
+}
+if(isset($_POST['hapussemua'])){
+    // echo json_encode($_SESSION['data']);die;
+    array_splice($_SESSION['data']['isi'], 0, count($_SESSION['data']['isi']));
+    getTotal();
+
+}
+
+if(isset($_POST['simpantransaksi'])){
+    // var_dump($_POST);die;
+    $notransaksi = $_POST['notransaksi'];
+    $tempatbeli = $_POST['tempatbeli'];
+    $tgltr = date('Y-m-d',strtotime($_POST['tgltr']));
+    $isi = json_encode($_SESSION['data']['isi']);
+    $total = (int)$_SESSION['data']['total'];
+
+	$query = "INSERT INTO barang_masuk
+				VALUES
+			  ('$notransaksi', '$tgltr', '$tempatbeli', '$isi', '$total')
+			";
+			// var_dump($query);die;
+	mysqli_query($conn, $query);
+
+
+    if( mysqli_affected_rows($conn) > 0 ) {
+        $_SESSION['data']=  null;
+        header("location:9-Dashboard-BarangMasuk.php");
+        setcookie('pesan', ' Transaksi berhasil ditambahkan ', time() + 5);
+
+	}
+}
+
 getTotal();
 // die;
 // var_dump(array_search("BR-2", $a)) ;die;
-// echo json_encode($a);die;
+// echo json_encode($_SESSION['data']);die;
 // var_dump($a);die;
 // var_dump(array_search("BR-1", array_column($a, "barang") )) ;die;
 
@@ -159,7 +201,7 @@ getTotal();
                 <div class="container-fluid">
                     <!-- OVERVIEW -->
                     <div class="panel panel-headline">
-                        <div class="panel-heading">
+                        <!-- <div class="panel-heading">
                             <div class="inibreadcumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -169,7 +211,7 @@ getTotal();
                                     </ol>
                                 </nav>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-8">
@@ -235,10 +277,10 @@ getTotal();
                                                         <input class="form-control" type="text" name="notransaksi" id="notransaksi" value="TRBM-<?= $lastkodetransaksi ?>" readonly>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" type="text" name="tgltr" id="tgltr">
+                                                        <input class="form-control" type="text" name="tgltr" id="tgltr" value="<?= date("m/d/Y") ?>">
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" type="text" name="tempatbeli" id="tempatbeli">
+                                                        <input class="form-control" type="text" name="tempatbeli" id="tempatbeli" value="Umum">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -253,7 +295,7 @@ getTotal();
                                                     <th>Unit</th>
                                                     <th>Harga Unit</th>
                                                     <th>Harga Total</th>
-                                                    <th><a href="" id="hapussemua">Hapus semua</a></th>
+                                                    <th><button class="btn" name="hapussemua" type="submit">Hapus Semua</button></a></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -266,16 +308,16 @@ getTotal();
                                                             <td>Kg</td>
                                                             <td><?= $data['subharga'] ?></td>
                                                             <td><?= $data['harga'] ?></td>
-                                                            <td><a href="" id="hapussebagian">Hapus</a></td>
+                                                            <td><button class="btn" name="btnhapus" value="<?= $data['barang'] ?>" type="submit">Hapus</button></td>
                                                         </tr>
                                                     <?php endforeach ?>
                                                 <?php endif ?>
                                                 <tr>
                                                     <td colspan="5">Total harga keseluruhan</td>
-                                                    <td colspan="2" id="totalhargakeseluruhan"><?= $_SESSION['data']['total'] ?></td>
+                                                    <td colspan="2" id="totalhargakeseluruhan"><?php if(isset($_SESSION['data']['total'])){echo $_SESSION['data']['total'];} ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8"><button class="btn btn-block btn-success" type="submit">Simpan</button></td>
+                                                    <td colspan="8"><button class="btn btn-block btn-success" name="simpantransaksi" type="submit">Simpan</button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
