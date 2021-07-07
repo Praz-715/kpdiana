@@ -6,6 +6,8 @@ if (isset($_GET['tb'])) {
 
     if($table == "barang_masuk"){
         $namakode = "kode_trans_masuk";
+    }else if($table == "data_penjualan"){
+        $namakode = "no_trans_penjualan";
     }
     require 'functions/functions-pelanggan.php';
     // $query = "SELECT * FROM $table WHERE $namakode = '$id'";
@@ -21,6 +23,17 @@ if (isset($_GET['tb'])) {
         $total = $daftartransaksi['grand_total'];
         // var_dump($isi);die;
 
+    }elseif ($table == "data_penjualan"){
+        $daftartransaksi = query("SELECT * FROM $table INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan WHERE $namakode = '$id'")[0];
+
+        $kodetransaksi = $daftartransaksi['no_trans_penjualan'];
+        $tanggaltransaksi = $daftartransaksi['tgl_trans_penjualan'];
+        $namaopsional   = "Pelanggan";
+        $opsional = $daftartransaksi['Nama_Pelanggan'];
+        $isi = json_decode($daftartransaksi['isi']);
+        $total = $daftartransaksi['total'];
+        $ongkir = $daftartransaksi['biaya_kirim'];
+        $grand_total = $daftartransaksi['grand_total'];
     }
 } else {
     // header("location:9-Dashboard-BarangMasuk.php");
@@ -66,6 +79,8 @@ if (isset($_GET['tb'])) {
         <center>
             <h2 class="text-center mb-3">Info Transaksi</h2>
             <div class="table-responsive">
+                
+                
                 <table class="table table-borderless">
                     <thead>
                         <tr>
@@ -89,10 +104,24 @@ if (isset($_GET['tb'])) {
                                 </tr>
                             <?php endforeach ?>
                         <?php endif ?>
-                        <tr>
-                            <td colspan="4" class="text-right">Total harga keseluruhan</td>
-                            <td colspan="2" class="text-left"><?= number_format($total,0,',','.') ?></td>
-                        </tr>
+                        <?php if($table == 'barang_masuk'): ?>
+                            <tr>
+                                <td colspan="4" class="text-right">Total harga keseluruhan</td>
+                                <td colspan="2" class="text-left"><?= number_format($total,0,',','.') ?></td>
+                            </tr>
+                        <?php elseif($table == "data_penjualan"): ?>
+                            <hr>
+                            <tr>
+                                <td>Biaya Kirim</td>
+                                <td><?= number_format($ongkir,0,',','.') ?></td>
+                                <td colspan="2">Total harga keseluruhan</td>
+                                <td colspan="2" id="totalhargakeseluruhan"><?= number_format($total,0,',','.') ?></td>
+                            </tr>
+                            <tr>
+                                <td class="bg-primary" colspan="3">Grand Total</td>
+                                <td class="bg-primary" colspan="4"><?= number_format($grand_total,0,',','.') ?></td>
+                            </tr>
+                        <?php endif ?>
                     </tbody>
                 </table>
             </div>

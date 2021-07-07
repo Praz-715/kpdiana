@@ -3,20 +3,12 @@
 session_start();
 
 // $_SESSION['data']=  null;
-require 'functions/functions-pelanggan.php';
-// var_dump(query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1"));die;
-if(empty(query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1"))){
-    $lastkodetransaksi = 1;
-}
-else{
-    $lastkodetransaksi = (int) explode("-",query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1")[0]['kode_trans_masuk'])[1] + 1;
-    
-}
+require 'functions/functions-penjualan.php';
+$lastkodetransaksi = (int) explode("-",query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LIMIT 1")[0]['no_trans_penjualan'])[1] + 1;
 $daftarbarang = query("SELECT * FROM identitas_barang");
+$daftarpelanggan = query("SELECT * FROM pelanggan");
 $daftarbarangjs = json_encode($daftarbarang);
 
-
-$a = $_SESSION['data'];
 
 function getTotal(){
     if(isset($_SESSION['data']['isi'])){
@@ -26,6 +18,8 @@ function getTotal(){
             $_SESSION['data']['total'] += (int)$_SESSION['data']['isi'][$i]['harga'];
             // var_dump($_SESSION['data']['total']);
         }
+        $_SESSION['data']['ongkir'] = 100000;
+        $_SESSION['data']['grandtotal'] = $_SESSION['data']['ongkir'] + $_SESSION['data']['total'];
     }
     // echo json_encode($a);die;
 }
@@ -72,29 +66,24 @@ if(isset($_POST['hapussemua'])){
 if(isset($_POST['simpantransaksi'])){
     // var_dump($_POST);die;
     $notransaksi = $_POST['notransaksi'];
-    $tempatbeli = $_POST['tempatbeli'];
+    $pelanggan = $_POST['pelanggan'];
     $tgltr = date('Y-m-d',strtotime($_POST['tgltr']));
     $isi = json_encode($_SESSION['data']['isi']);
     $total = (int)$_SESSION['data']['total'];
+    $ongkir = (int)$_SESSION['data']['ongkir'];
+    $grandtotal = (int)$_SESSION['data']['grandtotal'];
 
-	$query = "INSERT INTO barang_masuk
+	$query = "INSERT INTO data_penjualan
 				VALUES
-			  ('$notransaksi', '$tgltr', '$tempatbeli', '$isi', '$total')
+			  ('$notransaksi', '$tgltr', '$pelanggan', '$isi', '$total', '$ongkir', '$grandtotal')
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);
 
 
     if( mysqli_affected_rows($conn) > 0 ) {
-        foreach($_SESSION['data']['isi'] as $data){
-            $id = $data['barang'];
-            $qtsebelumnya = (int)query("SELECT Quantity from identitas_barang WHERE Kode_Barang = '$id'")[0]['Quantity'];
-            $qtbaru = $qtsebelumnya + (int)$data['qt'];
-            $query = "UPDATE identitas_barang SET Quantity = '$qtbaru' WHERE Kode_Barang = '$id'";
-            mysqli_query($conn, $query);
-        }
         $_SESSION['data']=  null;
-        header("location:9-Dashboard-BarangMasuk.php");
+        header("location:4-Dashboard-Penjualan.php");
         setcookie('pesan', ' Transaksi berhasil ditambahkan ', time() + 5);
 
 	}
@@ -102,9 +91,10 @@ if(isset($_POST['simpantransaksi'])){
 
 getTotal();
 // die;
+// die;
 // var_dump(array_search("BR-2", $a)) ;die;
 // echo json_encode($_SESSION['data']);die;
-// var_dump(query("SELECT Quantity from identitas_barang WHERE Kode_Barang = 'BR-1'")[0]['Quantity']);die;
+// echo json_encode($_SESSION['data']);die;
 // var_dump(array_search("BR-1", array_column($a, "barang") )) ;die;
 
 ?>
@@ -282,19 +272,23 @@ getTotal();
                                                 <tr>
                                                     <th>Nomor Transaksi</th>
                                                     <th>Tanggal Transaksi</th>
-                                                    <th>Tempat Beli</th>
+                                                    <th>Pelanggan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input class="form-control" type="text" name="notransaksi" id="notransaksi" value="TRBM-<?= $lastkodetransaksi ?>" readonly>
+                                                        <input class="form-control" type="text" name="notransaksi" id="notransaksi" value="TRP-<?= $lastkodetransaksi ?>" readonly>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" type="text" name="tgltr" id="tgltr" value="<?= date("m/d/Y") ?>">
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" type="text" name="tempatbeli" id="tempatbeli" value="Umum">
+                                                        <select class="form-control" name="pelanggan" id="pelanggan">
+                                                            <?php foreach($daftarpelanggan as $pelanggan): ?>
+                                                                <option selected value="<?= $pelanggan['Kode_Pelanggan'] ?>"><?= $pelanggan['Nama_Pelanggan'] ?></option>
+                                                            <?php endforeach ?>
+                                                        </select>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -318,17 +312,23 @@ getTotal();
                                                         <tr>
                                                             <td><?= $data['barang'] ?></td>
                                                             <td><?= $data['namabarang'] ?></td>
-                                                            <td><?= $data['qt'] ?></td>
+                                                            <td><?= number_format($data['qt'],0,',','.')  ?></td>
                                                             <td>Kg</td>
-                                                            <td><?= $data['subharga'] ?></td>
-                                                            <td><?= $data['harga'] ?></td>
+                                                            <td><?= number_format($data['subharga'],0,',','.') ?></td>
+                                                            <td><?= number_format($data['harga'],0,',','.')  ?></td>
                                                             <td><button class="btn" name="btnhapus" value="<?= $data['barang'] ?>" type="submit">Hapus</button></td>
                                                         </tr>
                                                     <?php endforeach ?>
                                                 <?php endif ?>
                                                 <tr>
-                                                    <td colspan="5">Total harga keseluruhan</td>
-                                                    <td colspan="2" id="totalhargakeseluruhan"><?php if(isset($_SESSION['data']['total'])){echo $_SESSION['data']['total'];} ?></td>
+                                                    <td>Biaya Kirim</td>
+                                                    <td>100.000</td>
+                                                    <td colspan="3">Total harga keseluruhan</td>
+                                                    <td colspan="2" id="totalhargakeseluruhan"><?php if(isset($_SESSION['data']['total'])){echo number_format($_SESSION['data']['total'],0,',','.') ;} ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bg-primary" colspan="3">Grand Total</td>
+                                                    <td class="bg-primary" colspan="4"><?php if(isset($_SESSION['data']['total'])){echo number_format($_SESSION['data']['grandtotal'],0,',','.') ;} ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8"><button class="btn btn-block btn-success" name="simpantransaksi" type="submit">Simpan</button></td>
@@ -369,13 +369,18 @@ getTotal();
     <script src="assets/scripts/jquery-ui.js"></script>
     <script src="assets/vendor/datatables/datatables.min.js"></script>
     <script>
+        
         var daftarbarang = <?php echo $daftarbarangjs; ?>;
-        console.log();
-
-
 
 
         $(document).ready(function() {
+
+            if (localStorage.getItem("pelanggan") === null) {
+                console.log("heheh");
+            }else{
+                console.log(localStorage.getItem("pelanggan"));
+            }
+
             $('#table_barang').DataTable();
 
             $('#barang').change(function(){
@@ -393,6 +398,7 @@ getTotal();
                 // alert(subharga);
                 $('#harga').val(qt * subharga);
             });
+            
 
             
         });
