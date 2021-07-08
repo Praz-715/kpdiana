@@ -108,14 +108,14 @@ if(isset($_POST['edit'])){
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="2-Dashboard-BeliBarang.html" class="">Barang</a></li>
-                                    <li><a href="3-Dashboard-Pelanggan.html" class="">Pelanggan</a></li>
+                                    <li><a href="2-Dashboard-BeliBarang.php" class="">Barang</a></li>
+                                    <li><a href="3-Dashboard-Pelanggan.php" class="">Pelanggan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="9-Dashboard-BarangMasuk .html" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="5-Dashboard-DataStock.html" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="9-Dashboard-BarangMasuk.php" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#Laporan" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>

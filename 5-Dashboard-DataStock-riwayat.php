@@ -1,21 +1,44 @@
 <?php
 
-require 'functions/functions-pelanggan.php';
+require 'functions/functions-belibarang.php';
 
-$daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
+if(isset($_GET['id'])){
+    $daftarpembelian = array();
+    $daftarpenjualan = array();
+    $id = $_GET['id'];
+    $namabarang = $_GET['barang'];
+    $stok = query("SELECT * FROM identitas_barang WHERE Kode_Barang = '$id'")[0]['Quantity'];
+    $riwayatpembelian = !empty(query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%' ORDER BY tgl_trans_masuk  DESC LIMIT 5") : null;
+    $riwayatpenjualan = !empty(query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%' ORDER BY tgl_trans_penjualan  DESC LIMIT 5") : null;
+        
+    if(!is_null($riwayatpembelian)){
+        foreach($riwayatpembelian as $riwayat){
+            $isipembelian = json_decode($riwayat['isi']);
+            $find = array_search($id, array_column($isipembelian, "barang") );
+            $daftarpembelian[] = array("tanggal" => $riwayat['tgl_trans_masuk'],"time" => $riwayat['time'], "isi" => $isipembelian[$find]);
+        }
+    }
+    if(!is_null($riwayatpenjualan)){
+        foreach($riwayatpenjualan as $riwayat){
+            $isipenjualan = json_decode($riwayat['isi']);
+            $find = array_search($id, array_column($isipenjualan, "barang") );
+            $daftarpenjualan[] = array("tanggal" => $riwayat['tgl_trans_penjualan'],"time" => $riwayat['time'], "isi" => $isipenjualan[$find]);
+        }
+    }
+    
 
-
-if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !empty($_GET['tgl2'])){
-    $tgl1 = $_GET['tgl1'];
-    $tgl2 = $_GET['tgl2'];
-    $daftartransaksi = query("SELECT * FROM data_penjualan WHERE tgl_trans_penjualan  BETWEEN '$tgl1' AND '$tgl2' INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
-    // var_dump("SELECT * FROM barang_masuk WHERE tgl_trans_masuk BETWEEN '$tgl1' AND '$tgl2'");die;
+        // echo json_encode($daftarpenjualan);die;
 }
+else {
+    header("location:5-Dashboard-DataStock.php");
+}
+$daftarbarang = query("SELECT * FROM identitas_barang");
 
-// var_dump(empty($_GET['tgl1']));die;
-// echo json_encode(json_decode($daftartransaksi[0]['isi']));die;
+
 
 ?>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -95,8 +118,8 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                             </div>
                         </li>
                         <li><a href="9-Dashboard-BarangMasuk.php" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.php" class="active"><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.php" class="active"><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#Laporan" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -134,57 +157,62 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <span class="label label-success">Filter data berdasarkan tanggal</span>
-                                    <div class="row">
-                                        <form action="" method="get">
-                                            <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl1" id="tgl1">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl2" id="tgl2">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button type="submit" class="btn btn-success">Cari</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <br>
-                                    <a href="4-Dashboard-Penjualan-transaksi.php" class="btn btn-primary"> <i class="fas fa-plus"></i> Tambah Data</a>
-                                    <h2>Data Penjualan</h2>
-                                    <!-- TABLE STRIPED -->
-
-                                    <table id="table_barang" class="display">
+                                <div class="col-md-6">
+                                    <h4>Pembelian <?= $namabarang ?></h4>
+                                    <table  class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>No Transaki</th>
-                                                <th>Tanggal Transaksi</th>
-                                                <th>Nama Pelanggan</th>
-                                                <th>Total Harga</th>
-                                                <th>Biaya Kirim</th>
-                                                <th>Grand Total</th>
-                                                <th>Print</th>
+                                                <th>Tanggal</th>
+                                                <th>Waktu</th>
+                                                <th>From</th>
+                                                <th>Pembelian</th>
+                                                <th>To</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i=1; ?>
-                                                <?php foreach($daftartransaksi as $daftar): ?>
+                                            <?php foreach($daftarpembelian as $daftar): ?>
                                                 <tr>
-                                                    <td><?= $daftar['no_trans_penjualan'] ?></td>
-                                                    <td><?= $daftar['tgl_trans_penjualan'] ?></td>
-                                                    <td><?= $daftar['Nama_Pelanggan'] ?></td>
-                                                    <td><?= number_format($daftar['total'],0,',','.')  ?></td>
-                                                    <td><?= number_format($daftar['biaya_kirim'],0,',','.')  ?></td>
-                                                    <td><?= number_format($daftar['grand_total'],0,',','.')  ?></td>
-                                                    <td><button class="btn-primary" onclick="return cetak('data_penjualan','<?= $daftar['no_trans_penjualan'] ?>')"><i class="fas fa-print"></i></button></td>
+                                                    <td><?= $daftar['tanggal'] ?></td>
+                                                    <td><?= $daftar['time'] ?></td>
+                                                    <td><?= $daftar['isi']->qtsebelumnya ?></td>
+                                                    <td><?= $daftar['isi']->qt ?></td>
+                                                    <td><?= $daftar['isi']->qtsesudahnya ?></td>
                                                 </tr>
-                                                <?php $i++; ?>
                                             <?php endforeach ?>
                                         </tbody>
                                     </table>
-                                    
                                 </div>
-
+                                <div class="col-md-6">
+                                    <h4>Penjualan <?= $namabarang ?></h4>
+                                    <table  class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Tanggal</th>
+                                                <th>Waktu</th>
+                                                <th>From</th>
+                                                <th>Penjualan</th>
+                                                <th>To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($daftarpenjualan as $daftar): ?>
+                                                <tr>
+                                                    <td><?= $daftar['tanggal'] ?></td>
+                                                    <td><?= $daftar['time'] ?></td>
+                                                    <td><?= $daftar['isi']->qtsebelumnya ?></td>
+                                                    <td><?= $daftar['isi']->qt ?></td>
+                                                    <td><?= $daftar['isi']->qtsesudahnya ?></td>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Stok saat ini = <?= $stok ?></h2>
+                                    <a class="btn btn-danger" href="5-Dashboard-DataStock.php">Kembali</a>
+                                </div>
                             </div>
                         </div>
                         <!-- END OVERVIEW -->
@@ -212,15 +240,7 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
         <script src="assets/vendor/chartist/js/chartist.min.js "></script>
         <script src="assets/scripts/klorofil-common.js "></script>
         <script src="assets/vendor/datatables/datatables.min.js "></script>
-        <script>
-            function cetak(tb,id){
-                window.open("cetak.php?tb="+tb+"&id="+id,"Cetak Transaksi", "width=900,height=600")
-            }
 
-            $(document).ready(function() {
-                $('#table_barang').DataTable();
-            });
-        </script>
 
 </body>
 

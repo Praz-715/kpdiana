@@ -16,7 +16,6 @@ $daftarbarang = query("SELECT * FROM identitas_barang");
 $daftarbarangjs = json_encode($daftarbarang);
 
 
-$a = $_SESSION['data'];
 
 function getTotal(){
     if(isset($_SESSION['data']['isi'])){
@@ -24,10 +23,10 @@ function getTotal(){
         $_SESSION['data']['total'] = 0;
         for($i=0;$i<count($_SESSION['data']['isi']);$i++){
             $_SESSION['data']['total'] += (int)$_SESSION['data']['isi'][$i]['harga'];
+            $_SESSION['data']['isi'][$i]['qtsesudahnya'] = $_SESSION['data']['isi'][$i]['qtsebelumnya'] + $_SESSION['data']['isi'][$i]['qt'];
             // var_dump($_SESSION['data']['total']);
         }
     }
-    // echo json_encode($a);die;
 }
 
 if(isset($_POST['add'])){
@@ -79,7 +78,7 @@ if(isset($_POST['simpantransaksi'])){
 
 	$query = "INSERT INTO barang_masuk
 				VALUES
-			  ('$notransaksi', '$tgltr', '$tempatbeli', '$isi', '$total')
+			  ('$notransaksi', '$tgltr', CURRENT_TIME(), '$tempatbeli', '$isi', '$total')
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);
@@ -102,10 +101,9 @@ if(isset($_POST['simpantransaksi'])){
 
 getTotal();
 // die;
-// var_dump(array_search("BR-2", $a)) ;die;
+
 // echo json_encode($_SESSION['data']);die;
 // var_dump(query("SELECT Quantity from identitas_barang WHERE Kode_Barang = 'BR-1'")[0]['Quantity']);die;
-// var_dump(array_search("BR-1", array_column($a, "barang") )) ;die;
 
 ?>
 
@@ -183,14 +181,14 @@ getTotal();
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="2-Dashboard-BeliBarang.html" class="">Barang</a></li>
-                                    <li><a href="3-Dashboard-Pelanggan.html" class="">Pelanggan</a></li>
+                                    <li><a href="2-Dashboard-BeliBarang.php" class="">Barang</a></li>
+                                    <li><a href="3-Dashboard-Pelanggan.php" class="">Pelanggan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="9-Dashboard-BarangMasuk .html" class="active"><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="5-Dashboard-DataStock.html" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="9-Dashboard-BarangMasuk.php" class="active"><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#Laporan" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -231,6 +229,8 @@ getTotal();
                                 <div class="col-md-8">
                                     <form action="" method="post">
                                         <input type="hidden" name="namabarang" id="namabarang">
+                                        <input type="hidden" name="qtsebelumnya" id="qtsebelumnya">
+                                        <input type="hidden" name="unit" id="unit">
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -319,7 +319,7 @@ getTotal();
                                                             <td><?= $data['barang'] ?></td>
                                                             <td><?= $data['namabarang'] ?></td>
                                                             <td><?= $data['qt'] ?></td>
-                                                            <td>Kg</td>
+                                                            <td><?= $data['unit'] ?></td>
                                                             <td><?= $data['subharga'] ?></td>
                                                             <td><?= $data['harga'] ?></td>
                                                             <td><button class="btn" name="btnhapus" value="<?= $data['barang'] ?>" type="submit">Hapus</button></td>
@@ -382,6 +382,8 @@ getTotal();
                 var kode_barang = daftarbarang.map(function(e) { return e.Kode_Barang; }).indexOf(this.value);
                 $('#subharga').val(daftarbarang[kode_barang]['Harga_Beli']);
                 $('#namabarang').val(daftarbarang[kode_barang]['Nama_Barang']);
+                $('#qtsebelumnya').val(daftarbarang[kode_barang]['Quantity']);
+                $('#unit').val(daftarbarang[kode_barang]['Unit']);
                 var subharga = $('#subharga').val();
                 var qt = $('#qt').val();
                 // alert(subharga);

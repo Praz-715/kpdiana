@@ -36,7 +36,7 @@ if (isset($_GET['tb'])) {
         $grand_total = $daftartransaksi['grand_total'];
     }
 } else {
-    // header("location:9-Dashboard-BarangMasuk.php");
+    header("location:9-Dashboard-BarangMasuk.php");
 }
 
 
