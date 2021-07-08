@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2021 at 12:13 PM
+-- Generation Time: Jul 08, 2021 at 12:16 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang_masuk` (
   `kode_trans_masuk` varchar(12) NOT NULL,
   `tgl_trans_masuk` date NOT NULL,
+  `time` time NOT NULL,
   `nama_tempat_beli` varchar(30) NOT NULL,
   `isi` longtext,
   `grand_total` bigint(20) NOT NULL
@@ -40,11 +41,9 @@ CREATE TABLE `barang_masuk` (
 -- Dumping data for table `barang_masuk`
 --
 
-INSERT INTO `barang_masuk` (`kode_trans_masuk`, `tgl_trans_masuk`, `nama_tempat_beli`, `isi`, `grand_total`) VALUES
-('TRBM-1', '2021-06-30', 'Aang suderajat', '[{\"namabarang\":\"Bawang Merah\",\"barang\":\"BR-1\",\"qt\":\"3\",\"subharga\":\"3000\",\"harga\":\"9000\",\"add\":\"\"},{\"namabarang\":\"Bawang Putih\",\"barang\":\"BR-2\",\"qt\":\"4\",\"subharga\":\"5000\",\"harga\":\"20000\",\"add\":\"\"},{\"namabarang\":\"jepit rambut\",\"barang\":\"BR-5\",\"qt\":\"5\",\"subharga\":\"2500\",\"harga\":\"12500\",\"add\":\"\"}]', 5000000),
-('TRBM-2', '2021-07-05', 'ad', '[{\"namabarang\":\"Bawang Merah\",\"barang\":\"BR-1\",\"qt\":\"3\",\"subharga\":\"3000\",\"harga\":\"9000\",\"add\":\"\"},{\"namabarang\":\"Bawang Putih\",\"barang\":\"BR-2\",\"qt\":\"4\",\"subharga\":\"5000\",\"harga\":\"20000\",\"add\":\"\"},{\"namabarang\":\"jepit rambut\",\"barang\":\"BR-5\",\"qt\":\"5\",\"subharga\":\"2500\",\"harga\":\"12500\",\"add\":\"\"}]', 41500),
-('TRBM-3', '2021-07-05', 'Pasar', '[{\"namabarang\":\"sandal\",\"barang\":\"BR-3\",\"qt\":\"100\",\"subharga\":\"3500\",\"harga\":\"350000\",\"add\":\"\"},{\"namabarang\":\"Bawang Putih\",\"barang\":\"BR-2\",\"qt\":\"200\",\"subharga\":\"5000\",\"harga\":\"1000000\",\"add\":\"\"},{\"namabarang\":\"jepit rambut\",\"barang\":\"BR-5\",\"qt\":\"300\",\"subharga\":\"2500\",\"harga\":\"750000\",\"add\":\"\"}]', 2100000),
-('TRBM-4', '2021-07-05', 'Umum', '[{\"namabarang\":\"sandal\",\"barang\":\"BR-3\",\"qt\":\"500\",\"subharga\":\"3500\",\"harga\":\"1750000\",\"add\":\"\"}]', 1750000);
+INSERT INTO `barang_masuk` (`kode_trans_masuk`, `tgl_trans_masuk`, `time`, `nama_tempat_beli`, `isi`, `grand_total`) VALUES
+('TRBM-1', '2021-07-08', '15:31:19', 'Umum', '[{\"namabarang\":\"Bawang Merah\",\"qtsebelumnya\":\"0\",\"unit\":\"Kg\",\"barang\":\"BR-1\",\"qt\":\"100\",\"subharga\":\"3000\",\"harga\":\"300000\",\"add\":\"\",\"qtsesudahnya\":100},{\"namabarang\":\"sandal\",\"qtsebelumnya\":\"0\",\"unit\":\"Pcs\",\"barang\":\"BR-3\",\"qt\":\"50\",\"subharga\":\"3500\",\"harga\":\"175000\",\"add\":\"\",\"qtsesudahnya\":50},{\"namabarang\":\"jepit rambut\",\"qtsebelumnya\":\"0\",\"unit\":\"Pcs\",\"barang\":\"BR-5\",\"qt\":\"700\",\"subharga\":\"2500\",\"harga\":\"1750000\",\"add\":\"\",\"qtsesudahnya\":700}]', 2225000),
+('TRBM-2', '2021-07-08', '15:31:45', 'Umum', '[{\"namabarang\":\"Bawang Putih\",\"qtsebelumnya\":\"0\",\"unit\":\"Kg\",\"barang\":\"BR-2\",\"qt\":\"70\",\"subharga\":\"5000\",\"harga\":\"350000\",\"add\":\"\",\"qtsesudahnya\":70},{\"namabarang\":\"sandal\",\"qtsebelumnya\":\"50\",\"unit\":\"Pcs\",\"barang\":\"BR-3\",\"qt\":\"60\",\"subharga\":\"3500\",\"harga\":\"210000\",\"add\":\"\",\"qtsesudahnya\":110},{\"namabarang\":\"jepit rambut\",\"qtsebelumnya\":\"700\",\"unit\":\"Pcs\",\"barang\":\"BR-5\",\"qt\":\"80\",\"subharga\":\"2500\",\"harga\":\"200000\",\"add\":\"\",\"qtsesudahnya\":780}]', 760000);
 
 -- --------------------------------------------------------
 
@@ -53,15 +52,23 @@ INSERT INTO `barang_masuk` (`kode_trans_masuk`, `tgl_trans_masuk`, `nama_tempat_
 --
 
 CREATE TABLE `data_penjualan` (
-  `No_Trans_Penjualan` varchar(12) NOT NULL,
-  `Tgl_Trans_Penjualan` date NOT NULL,
-  `Kode_Barang` varchar(12) NOT NULL,
-  `Nama_Pelanggan` varchar(30) NOT NULL,
-  `Total_Harga` bigint(20) NOT NULL,
-  `Biaya_Kirim` bigint(20) NOT NULL,
-  `Grand_Total` bigint(20) NOT NULL,
-  `Total` bigint(20) NOT NULL
+  `no_trans_penjualan` varchar(12) NOT NULL,
+  `tgl_trans_penjualan` date NOT NULL,
+  `time` time NOT NULL,
+  `fk_pelanggan` varchar(30) NOT NULL,
+  `isi` longtext,
+  `total` bigint(20) NOT NULL,
+  `biaya_kirim` bigint(20) NOT NULL,
+  `grand_total` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_penjualan`
+--
+
+INSERT INTO `data_penjualan` (`no_trans_penjualan`, `tgl_trans_penjualan`, `time`, `fk_pelanggan`, `isi`, `total`, `biaya_kirim`, `grand_total`) VALUES
+('TRP-1', '2021-07-08', '15:32:15', 'PLG-3', '[{\"namabarang\":\"Bawang Merah\",\"qtsebelumnya\":\"100\",\"unit\":\"Kg\",\"barang\":\"BR-1\",\"stok\":\"100\",\"qt\":\"30\",\"subharga\":\"4000\",\"harga\":\"120000\",\"add\":\"\",\"qtsesudahnya\":70},{\"namabarang\":\"sandal\",\"qtsebelumnya\":\"110\",\"unit\":\"Pcs\",\"barang\":\"BR-3\",\"stok\":\"110\",\"qt\":\"70\",\"subharga\":\"5000\",\"harga\":\"350000\",\"add\":\"\",\"qtsesudahnya\":40},{\"namabarang\":\"jepit rambut\",\"qtsebelumnya\":\"780\",\"unit\":\"Pcs\",\"barang\":\"BR-5\",\"stok\":\"780\",\"qt\":\"55\",\"subharga\":\"4500\",\"harga\":\"247500\",\"add\":\"\",\"qtsesudahnya\":725}]', 717500, 100000, 817500),
+('TRP-2', '2021-07-08', '15:32:41', 'PLG-3', '[{\"namabarang\":\"jepit rambut\",\"qtsebelumnya\":\"725\",\"unit\":\"Pcs\",\"barang\":\"BR-5\",\"stok\":\"725\",\"qt\":12,\"subharga\":\"4500\",\"harga\":54000,\"add\":\"\",\"qtsesudahnya\":713},{\"namabarang\":\"Bawang Merah\",\"qtsebelumnya\":\"70\",\"unit\":\"Kg\",\"barang\":\"BR-1\",\"stok\":\"70\",\"qt\":\"9\",\"subharga\":\"4000\",\"harga\":\"36000\",\"add\":\"\",\"qtsesudahnya\":61},{\"namabarang\":\"sandal\",\"qtsebelumnya\":\"40\",\"unit\":\"Pcs\",\"barang\":\"BR-3\",\"stok\":\"40\",\"qt\":\"6\",\"subharga\":\"5000\",\"harga\":\"30000\",\"add\":\"\",\"qtsesudahnya\":34}]', 120000, 100000, 220000);
 
 -- --------------------------------------------------------
 
@@ -84,10 +91,10 @@ CREATE TABLE `identitas_barang` (
 --
 
 INSERT INTO `identitas_barang` (`Kode_Barang`, `Nama_Barang`, `Unit`, `Harga_Beli`, `Harga_Jual`, `Quantity`, `Total_Quantity`) VALUES
-('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 12, 12),
-('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 30, 30),
-('BR-3', 'sandal', 'Pcs', 3500, 5000, NULL, NULL),
-('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, NULL, NULL);
+('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 61, 12),
+('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 70, 30),
+('BR-3', 'sandal', 'Pcs', 3500, 5000, 34, NULL),
+('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, 713, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,9 +162,8 @@ ALTER TABLE `barang_masuk`
 -- Indexes for table `data_penjualan`
 --
 ALTER TABLE `data_penjualan`
-  ADD PRIMARY KEY (`No_Trans_Penjualan`),
-  ADD KEY `Kode_Barang` (`Kode_Barang`),
-  ADD KEY `Nama_Pelanggan` (`Nama_Pelanggan`);
+  ADD PRIMARY KEY (`no_trans_penjualan`),
+  ADD KEY `Nama_Pelanggan` (`fk_pelanggan`);
 
 --
 -- Indexes for table `identitas_barang`
@@ -192,8 +198,7 @@ ALTER TABLE `user_/_admin`
 -- Constraints for table `data_penjualan`
 --
 ALTER TABLE `data_penjualan`
-  ADD CONSTRAINT `Kode_Barang` FOREIGN KEY (`Kode_Barang`) REFERENCES `identitas_barang` (`Kode_Barang`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Nama_Pelanggan` FOREIGN KEY (`Nama_Pelanggan`) REFERENCES `pelanggan` (`Kode_Pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `data_penjualan_ibfk_1` FOREIGN KEY (`fk_pelanggan`) REFERENCES `pelanggan` (`Kode_Pelanggan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
