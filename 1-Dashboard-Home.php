@@ -1,4 +1,40 @@
+<?php
 
+
+require "functions/functions-dashboard.php";
+
+
+
+$pembelian = query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk LIMIT 20 ");
+$penjualan = query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan LIMIT 20 ");
+$daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
+
+$totalstokbarang = (int)query("SELECT SUM(Quantity) as qt FROM identitas_barang")[0]['qt'];
+
+$totalpembelian = (int)query("SELECT SUM(grand_total) as total FROM barang_masuk ")[0]['total'];
+$totalpenjualan = (int)query("SELECT SUM(total) as total FROM data_penjualan ")[0]['total'];
+
+$persenpembelian = $totalpembelian / ($totalpembelian + $totalpenjualan) * 100;
+$persenpenjualan = $totalpenjualan / ($totalpembelian + $totalpenjualan) * 100;
+
+$datapenjualan = [];
+foreach($penjualan as $x){
+    $datapenjualan[] = [$x['no_trans_penjualan'], round((int)$x['total'] / $totalpenjualan * 100, 2) ];
+}
+$datapembelian = [];
+foreach($pembelian as $x){
+    $datapembelian[] = [$x['kode_trans_masuk'], round((int)$x['grand_total'] / $totalpembelian * 100, 2) ];
+}
+
+
+
+
+// var_dump( round($persenpenjualan, 2) );die;
+// echo json_encode($datapembelian);die;
+
+// die;
+
+?>
 
 
 <!doctype html>
@@ -11,7 +47,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/fontawesome-free-5.15.3-web/css/all.css">
     <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
     <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
     <!-- MAIN CSS -->
@@ -64,31 +100,31 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="1-Dashboard-Home.html" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="1-Dashboard-Home.php" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="2-Dashboard-BeliBarang.html" class="">Barang</a></li>
-                                    <li><a href="3-Dashboard-Pelanggan.html" class="">Pelanggan</a></li>
+                                    <li><a href="2-Dashboard-BeliBarang.php" class="">Barang</a></li>
+                                    <li><a href="3-Dashboard-Pelanggan.php" class="">Pelanggan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="9-Dashboard-BarangMasuk .html" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="5-Dashboard-DataStock.html" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="9-Dashboard-BarangMasuk.php" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#Laporan" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="">Laporan Pembelian</a></li>
-                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Laporan Penjualan</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="">Laporan Pembelian</a></li>
+                                    <li><a href="11-Dashboard-LaporanPenjualan.php" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="page-profile.html" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
+                        <li><a href="page-profile.php" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
                         <li><a href="" class=""><i class="lnr lnr-dice"></i> <span>Keluar</span></a></li>
                     </ul>
                 </nav>
@@ -112,7 +148,7 @@
                                     <div class="metric">
                                         <span class="icon" style="background-color: rgb(196, 255, 221);"><img style="width: 70%;" src="assets/img/total-barang.png" alt="" srcset=""></span>
                                         <p>
-                                            <span class="number">1,252</span>
+                                            <span class="number"><?= number_format($totalstokbarang,0,',','.')  ?></span>
                                             <span class="title">Total Stock Barang</span>
                                         </p>
                                     </div>
@@ -121,7 +157,7 @@
                                     <div class="metric">
                                         <span class="icon" style="background-color: rgb(196, 255, 221);"><img style="width: 70%;" src="assets/img/pembelian.png" alt="" srcset=""></i></span>
                                         <p>
-                                            <span class="number">203</span>
+                                            <span class="number"><?= number_format($totalpembelian,0,',','.')  ?></span>
                                             <span class="title">Total Pembelian</span>
                                         </p>
                                     </div>
@@ -130,7 +166,7 @@
                                     <div class="metric">
                                         <span class="icon" style="background-color: rgb(196, 255, 221);"><img style="width: 70%;" src="assets/img/penjualan.png" alt="" srcset=""></i></span>
                                         <p>
-                                            <span class="number">274,678</span>
+                                            <span class="number"><?= number_format($totalpenjualan,0,',','.')  ?></span>
                                             <span class="title">Total Penjualan</span>
                                         </p>
                                     </div>
@@ -170,7 +206,7 @@
                                                 <h4>Total penjualan</h4>
                                             </div>
                                             <div class="col-xs-4">
-                                                <h4>: 20000000</h4>
+                                                <h4>: <?= number_format($totalpenjualan,0,',','.')  ?></h4>
                                             </div>
                                         </div>
                                         <div class="row" sty>
@@ -178,7 +214,7 @@
                                                 <h4>Total Pembelian</h4>
                                             </div>
                                             <div class="col-xs-4">
-                                                <h4>: 10000000</h4>
+                                                <h4>: <?= number_format($totalpembelian,0,',','.')  ?></h4>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -197,7 +233,7 @@
                                                 <h4>Hasil</h4>
                                             </div>
                                             <div class="col-xs-4">
-                                                <h4>: 10000000 (Laba)</h4>
+                                                <h4>: <?php echo number_format(($totalpenjualan - $totalpembelian),0,',','.');  ?> (Laba)</h4>
                                             </div>
 
                                         </div>
@@ -228,57 +264,26 @@
                                                 <th>Print</th>
                                             </tr>
                                         </thead>
+                                        <tbody>
+                                            <?php foreach($daftartransaksi as $daftar): ?>
+                                                <tr>
+                                                    <td><?= $daftar['no_trans_penjualan'] ?></td>
+                                                    <td><?= $daftar['tgl_trans_penjualan'] ?></td>
+                                                    <td><?= $daftar['Nama_Pelanggan'] ?></td>
+                                                    <!-- <td><?= number_format($daftar['total'],0,',','.')  ?></td> -->
+                                                    <!-- <td><?= number_format($daftar['biaya_kirim'],0,',','.')  ?></td> -->
+                                                    <td><?= number_format($daftar['grand_total'],0,',','.')  ?></td>
+                                                    <td><button class="btn-primary" onclick="return cetak('data_penjualan','<?= $daftar['no_trans_penjualan'] ?>')"><i class="fas fa-print"></i></button></td>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
 
-                                        <body>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">763652</a></td>
-                                                <td>18 - 06 - 2021</td>
-                                                <td>Mr. Bean</td>
-                                                <td>200.000</td>
-                                                <td><span class="label label-success">cetak</span></td>
-                                            </tr>
-                                        </body>
                                     </table>
                                 </div>
                                 <div class="panel-footer">
                                     <div class="row">
                                         <div class="col-md-6"><span class="panel-note"><i class="fa fa-clock-o"></i> Last 24 hours</span></div>
-                                        <div class="col-md-6 text-right"><a href="#" class="btn btn-primary">View All Purchases</a></div>
+                                        <div class="col-md-6 text-right"><a href="4-Dashboard-Penjualan.php" class="btn btn-primary">View All Purchases</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -354,11 +359,11 @@
                 colorByPoint: true,
                 data: [{
                     name: "Penjualan",
-                    y: 70,
+                    y: <?= $persenpenjualan ?>,
                     drilldown: "Penjualan"
                 }, {
                     name: "Pembelian",
-                    y: 30,
+                    y: <?= $persenpembelian ?>,
                     drilldown: "Pembelian"
                 }]
             }],
@@ -366,130 +371,20 @@
                 series: [{
                     name: "Penjualan",
                     id: "Penjualan",
-                    data: [
-                        [
-                            "v65.0",
-                            0.1
-                        ],
-                        [
-                            "v64.0",
-                            1.3
-                        ],
-                        [
-                            "v63.0",
-                            53.02
-                        ],
-                        [
-                            "v62.0",
-                            1.4
-                        ],
-                        [
-                            "v61.0",
-                            0.88
-                        ],
-                        [
-                            "v60.0",
-                            0.56
-                        ],
-                        [
-                            "v59.0",
-                            0.45
-                        ],
-                        [
-                            "v58.0",
-                            0.49
-                        ],
-                        [
-                            "v57.0",
-                            0.32
-                        ],
-                        [
-                            "v56.0",
-                            0.29
-                        ],
-                        [
-                            "v55.0",
-                            0.79
-                        ],
-                        [
-                            "v54.0",
-                            0.18
-                        ],
-                        [
-                            "v51.0",
-                            0.13
-                        ],
-                        [
-                            "v49.0",
-                            2.16
-                        ],
-                        [
-                            "v48.0",
-                            0.13
-                        ],
-                        [
-                            "v47.0",
-                            0.11
-                        ],
-                        [
-                            "v43.0",
-                            0.17
-                        ],
-                        [
-                            "v29.0",
-                            0.26
-                        ]
-                    ]
+                    data: <?php echo json_encode($datapenjualan); ?>
                 }, {
                     name: "Pembelian",
                     id: "Pembelian",
-                    data: [
-                        [
-                            "v58.0",
-                            1.02
-                        ],
-                        [
-                            "v57.0",
-                            7.36
-                        ],
-                        [
-                            "v56.0",
-                            0.35
-                        ],
-                        [
-                            "v55.0",
-                            0.11
-                        ],
-                        [
-                            "v54.0",
-                            0.1
-                        ],
-                        [
-                            "v52.0",
-                            0.95
-                        ],
-                        [
-                            "v51.0",
-                            0.15
-                        ],
-                        [
-                            "v50.0",
-                            0.1
-                        ],
-                        [
-                            "v48.0",
-                            0.31
-                        ],
-                        [
-                            "v47.0",
-                            0.12
-                        ]
-                    ]
+                    data: <?php echo json_encode($datapembelian); ?>
                 }]
             }
         });
+        function cetak(tb,id){
+            window.open("cetak.php?tb="+tb+"&id="+id,"Cetak Transaksi", "width=900,height=600")
+        }
     </script>
 
 </body>
 
 </html>
+

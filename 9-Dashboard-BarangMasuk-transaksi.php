@@ -175,7 +175,7 @@ getTotal();
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="1-Dashboard-Home.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="1-Dashboard-Home.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -194,12 +194,12 @@ getTotal();
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="">Laporan Pembelian</a></li>
-                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Laporan Penjualan</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="">Laporan Pembelian</a></li>
+                                    <li><a href="11-Dashboard-LaporanPenjualan.php" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="page-profile.html" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
+                        <li><a href="page-profile.php" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
                         <li><a href="" class=""><i class="lnr lnr-dice"></i> <span>Keluar</span></a></li>
                     </ul>
                 </nav>

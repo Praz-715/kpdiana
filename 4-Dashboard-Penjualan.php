@@ -83,7 +83,7 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="1-Dashboard-Home.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="1-Dashboard-Home.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -102,12 +102,12 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="">Laporan Pembelian</a></li>
-                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Laporan Penjualan</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="">Laporan Pembelian</a></li>
+                                    <li><a href="11-Dashboard-LaporanPenjualan.php" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="page-profile.html" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
+                        <li><a href="page-profile.php" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
                         <li><a href="" class=""><i class="lnr lnr-dice"></i> <span>Keluar</span></a></li>
                     </ul>
                 </nav>
@@ -167,8 +167,7 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i=1; ?>
-                                                <?php foreach($daftartransaksi as $daftar): ?>
+                                            <?php foreach($daftartransaksi as $daftar): ?>
                                                 <tr>
                                                     <td><?= $daftar['no_trans_penjualan'] ?></td>
                                                     <td><?= $daftar['tgl_trans_penjualan'] ?></td>
@@ -178,7 +177,6 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                                                     <td><?= number_format($daftar['grand_total'],0,',','.')  ?></td>
                                                     <td><button class="btn-primary" onclick="return cetak('data_penjualan','<?= $daftar['no_trans_penjualan'] ?>')"><i class="fas fa-print"></i></button></td>
                                                 </tr>
-                                                <?php $i++; ?>
                                             <?php endforeach ?>
                                         </tbody>
                                     </table>

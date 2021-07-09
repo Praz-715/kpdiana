@@ -8,8 +8,8 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
     $namabarang = $_GET['barang'];
     $stok = query("SELECT * FROM identitas_barang WHERE Kode_Barang = '$id'")[0]['Quantity'];
-    $riwayatpembelian = !empty(query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%' ORDER BY tgl_trans_masuk  DESC LIMIT 5") : null;
-    $riwayatpenjualan = !empty(query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%' ORDER BY tgl_trans_penjualan  DESC LIMIT 5") : null;
+    $riwayatpembelian = !empty(query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM barang_masuk WHERE isi LIKE '%$id%' ORDER BY kode_trans_masuk  DESC LIMIT 5") : null;
+    $riwayatpenjualan = !empty(query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%'")) ? query("SELECT * FROM data_penjualan WHERE isi LIKE '%$id%' ORDER BY no_trans_penjualan  DESC LIMIT 5") : null;
         
     if(!is_null($riwayatpembelian)){
         foreach($riwayatpembelian as $riwayat){
