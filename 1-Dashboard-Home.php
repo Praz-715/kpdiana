@@ -10,6 +10,7 @@ $penjualan = query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan LIM
 $daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
 
 $totalstokbarang = (int)query("SELECT SUM(Quantity) as qt FROM identitas_barang")[0]['qt'];
+$totalpelanggan = (int)query("SELECT COUNT(Kode_Pelanggan) as p FROM pelanggan")[0]['p'];
 
 $totalpembelian = (int)query("SELECT SUM(grand_total) as total FROM barang_masuk ")[0]['total'];
 $totalpenjualan = (int)query("SELECT SUM(total) as total FROM data_penjualan ")[0]['total'];
@@ -175,7 +176,7 @@ foreach($pembelian as $x){
                                     <div class="metric">
                                         <span class="icon" style="background-color: rgb(196, 255, 221);"><img style="width: 70%;" src="assets/img/customer.png" alt="" srcset=""></i></span>
                                         <p>
-                                            <span class="number">35</span>
+                                            <span class="number"><?= number_format($totalpelanggan,0,',','.')  ?></span>
                                             <span class="title">Total Customer</span>
                                         </p>
                                     </div>
