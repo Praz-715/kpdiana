@@ -64,27 +64,27 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="1-Dashboard-Home.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="1-Dashboard-Home.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="3-Dashboard-BarangMasuk.html" class="">Barang</a></li>
-                                    <li><a href="3-Dashboard-Pelanggan.html" class="">Pelanggan</a></li>
+                                    <li><a href="3-Dashboard-BarangMasuk.php" class="">Barang</a></li>
+                                    <li><a href="3-Dashboard-Pelanggan.php" class="">Pelanggan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="9-Dashboard-BarangMasuk .html" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
-                        <li><a href="4-Dashboard-Penjualan.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
-                        <li><a href="5-Dashboard-DataStock.html" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
+                        <li><a href="9-Dashboard-BarangMasuk.php" class=""><i class="lnr lnr-code"></i></i> <span>Barang</span></a></li>
+                        <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
+                        <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
                             <a href="#Laporan" data-toggle="collapse" class="collapsed active"><i class="lnr lnr-file-empty"></i>
 							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.html" class="active">Laporan Pembelian</a></li>
-                                    <li><a href="11-Dashboard-LaporanPenjualan.html" class="">Laporan Penjualan</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="active">Laporan Pembelian</a></li>
+                                    <li><a href="11-Dashboard-LaporanPenjualan.php" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -118,9 +118,11 @@
                                 <div class="col-md-12">
                                     <h3>Laporan Pembelian</h3>
                                     <h4>Berdasarkan</h4>
-                                    <form action="" method="get">
+                                    <form method="post" target="print_popup" action="cetak-laporan.php" onsubmit="window.open('about:blank','print_popup','width=1000,height=800');">
+                                    <input type="hidden" name="nama" value="pembelian">
+
                                         <label class="fancy-radio">
-                                            <input id="semuadata" name="datanya" value="semuadata" type="radio">
+                                            <input id="semuadata" name="datanya" value="semuadata" type="radio" required>
                                             <span><i></i>Semua data</span>
                                         </label>
                                         <label class="fancy-radio">
