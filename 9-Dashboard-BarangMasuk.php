@@ -139,10 +139,10 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                                     <div class="row">
                                         <form action="" method="get">
                                             <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl1" id="tgl1">
+                                                <input class="form-control" type="date" name="tgl1" id="tgl1"  <?php if(isset($_GET['tgl1'])):?> value="<?= $_GET['tgl1'] ?>" <?php endif?> >
                                             </div>
                                             <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl2" id="tgl2">
+                                                <input class="form-control" type="date" name="tgl2" id="tgl2"  <?php if(isset($_GET['tgl1'])):?> value="<?= $_GET['tgl1'] ?>" <?php endif?> >
                                             </div>
                                             <div class="col-md-3">
                                                 <button type="submit" class="btn btn-success">Cari</button>

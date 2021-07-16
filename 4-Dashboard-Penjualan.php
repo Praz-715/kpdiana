@@ -8,7 +8,7 @@ $daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON f
 if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !empty($_GET['tgl2'])){
     $tgl1 = $_GET['tgl1'];
     $tgl2 = $_GET['tgl2'];
-    $daftartransaksi = query("SELECT * FROM data_penjualan WHERE tgl_trans_penjualan  BETWEEN '$tgl1' AND '$tgl2' INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
+    $daftartransaksi = query("SELECT * FROM data_penjualan  INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan WHERE tgl_trans_penjualan  BETWEEN '$tgl1' AND '$tgl2'");
     // var_dump("SELECT * FROM barang_masuk WHERE tgl_trans_masuk BETWEEN '$tgl1' AND '$tgl2'");die;
 }
 
@@ -139,10 +139,10 @@ if(isset($_GET['tgl1'])  && isset($_GET['tgl2']) && !empty($_GET['tgl1']) && !em
                                     <div class="row">
                                         <form action="" method="get">
                                             <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl1" id="tgl1">
+                                                <input class="form-control" type="date" name="tgl1" id="tgl1" <?php if(isset($_GET['tgl1'])):?> value="<?= $_GET['tgl1'] ?>" <?php endif?> >
                                             </div>
                                             <div class="col-md-3">
-                                                <input class="form-control" type="date" name="tgl2" id="tgl2">
+                                                <input class="form-control" type="date" name="tgl2" id="tgl2" <?php if(isset($_GET['tgl2'])):?> value="<?= $_GET['tgl2'] ?>" <?php endif?> >
                                             </div>
                                             <div class="col-md-3">
                                                 <button type="submit" class="btn btn-success">Cari</button>
