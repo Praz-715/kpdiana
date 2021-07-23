@@ -1,16 +1,14 @@
 <?php
 
-
 session_start();
-
+// var_dump($_SESSION['login']);die;
 if( !isset($_SESSION["login"]) ) {
 	header("Location: login.php");
 	exit;
 }
 
-?>
 
-<!doctype html>
+?><!doctype html>
 <html lang="en">
 
 <head>
@@ -32,9 +30,6 @@ if( !isset($_SESSION["login"]) ) {
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/jquery-ui.css">
-
-
 </head>
 
 <body>
@@ -59,9 +54,11 @@ if( !isset($_SESSION["login"]) ) {
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/profile/<?= $_SESSION['user']['gambar'] ?>" class="img-circle" alt="Avatar"> <span><?= $_SESSION['user']['nama'] ?></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-                             <ul class="dropdown-menu">
-                                <li><a href="page-profile.php"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-                                <li><a href="logout.php"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                            <ul class="dropdown-menu">
+                                <li><a href="7-Dashboard-Profile.html"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+                                <li><a href=""><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -77,7 +74,7 @@ if( !isset($_SESSION["login"]) ) {
                         <li><a href="1-Dashboard-Home.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
-							<span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                                <span>Data Master</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPages" class="collapse ">
                                 <ul class="nav">
                                     <li><a href="3-Dashboard-BarangMasuk.php" class="">Barang</a></li>
@@ -89,16 +86,16 @@ if( !isset($_SESSION["login"]) ) {
                         <li><a href="4-Dashboard-Penjualan.php" class=""><i class="lnr lnr-chart-bars"></i> <span>Penjualan</span></a></li>
                         <li><a href="5-Dashboard-DataStock.php" class=""><i class="lnr lnr-cog"></i> <span>Data Stock</span></a></li>
                         <li>
-                            <a href="#Laporan" data-toggle="collapse" class="collapsed active"><i class="lnr lnr-file-empty"></i>
-							<span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <a href="#Laporan" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
+                                <span>Laporan</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="Laporan" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="active">Laporan Pembelian</a></li>
+                                    <li><a href="10-Dashboard-LaporanPembelian.php" class="">Laporan Pembelian</a></li>
                                     <li><a href="11-Dashboard-LaporanPenjualan.php" class="">Laporan Penjualan</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="page-profile.html" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
+                        <li><a href="page-profile.php" class="active"><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
                         <li><a href="logout.php" class=""><i class="lnr lnr-dice"></i> <span>Keluar</span></a></li>
                     </ul>
                 </nav>
@@ -110,57 +107,53 @@ if( !isset($_SESSION["login"]) ) {
             <!-- MAIN CONTENT -->
             <div class="main-content">
                 <div class="container-fluid">
-                    <!-- OVERVIEW -->
-                    <div class="panel panel-headline">
-                        <div class="panel-heading">
-                            <div class="inibreadcumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
-                                        <li class="breadcrumb-item">Laporan</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Laporan Pembelian</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3>Laporan Pembelian</h3>
-                                    <h4>Berdasarkan</h4>
-                                    <form method="post" target="print_popup" action="cetak-laporan.php" onsubmit="window.open('about:blank','print_popup','width=1000,height=800');">
-                                    <input type="hidden" name="nama" value="pembelian">
+                    <div class="panel panel-profile">
+                        <div class="clearfix">
+                            <!-- LEFT COLUMN -->
+                            <div class="profile-left">
+                                <!-- PROFILE HEADER -->
+                                <div class="profile-header">
+                                    <div class="overlay"></div>
+                                    <div class="profile-main">
+                                        <img src="assets/img/di.jpg" width="90px" height="90px" class="img-circle" alt="Avatar">
+                                        <h3 class="name">Dianina Franciscus</h3>
+                                    </div>
 
-                                        <label class="fancy-radio">
-                                            <input id="semuadata" name="datanya" value="semuadata" type="radio" required>
-                                            <span><i></i>Semua data</span>
-                                        </label>
-                                        <label class="fancy-radio">
-                                            <input id="berdasarkantanggal" name="datanya" value="berdasarkantanggal" type="radio">
-                                            <span><i></i>Tanggal</span>
-                                        </label>
-                                        <div class="fromto" style="display: none;">
-                                            <div class="form-group">
-                                                <label for="daritgl">Dari Tanggal</label>
-                                                <input type="text" name="daritgl" id="from">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="sampaitgl">Sampai Tanggal</label>
-                                                <input type="text" name="sampaitgl" id="to">
-                                            </div>
-                                        </div>
-
-                                        <button class="btn btn-success" type="submit">Tampilkan</button>
-                                    </form>
                                 </div>
+                                <!-- END PROFILE HEADER -->
+                                <!-- PROFILE DETAIL -->
+                                <!-- <div class="profile-detail">
+                                    <div class="profile-info">
+                                        <h4 class="heading">Basic Info</h4>
+                                        <ul class="list-unstyled list-justify">
+                                            <li>Birthdate <span>24 Aug, 2016</span></li>
+                                            <li>Mobile <span>(124) 823409234</span></li>
+                                            <li>Email <span>samuel@mydomain.com</span></li>
+                                            <li>Website <span><a href="https://www.themeineed.com">www.themeineed.com</a></span></li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+                                <!-- END PROFILE DETAIL -->
                             </div>
-
+                            <!-- END LEFT COLUMN -->
+                            <!-- RIGHT COLUMN -->
+                            <div class="profile-right">
+                                <!-- PROFILE DETAIL -->
+                                <div class="profile-detail">
+                                    <div class="profile-info">
+                                        <h4 class="heading">Basic Info</h4>
+                                        <ul class="list-unstyled list-justify">
+                                            <li>Nama Lengkap <span>24 Aug, 2016</span></li>
+                                            <li>Email <span>(124) 823409234</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- END PROFILE DETAIL -->
+                                <div class="text-center"><a href="#" class="btn btn-primary">Edit Profile</a></div>
+                            </div>
+                            <!-- END RIGHT COLUMN -->
                         </div>
                     </div>
-                    <!-- END OVERVIEW -->
-
-
-
                 </div>
             </div>
             <!-- END MAIN CONTENT -->
@@ -178,51 +171,7 @@ if( !isset($_SESSION["login"]) ) {
     <script src="assets/vendor/jquery/jquery.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="assets/scripts/klorofil-common.js"></script>
-    <script src="assets/scripts/jquery-ui.js"></script>
-    <script>
-        $(function() {
-            var dateFormat = "mm/dd/yy",
-                from = $("#from")
-                .datepicker({
-                    defaultDate: "+1w",
-                    changeMonth: true,
-                    numberOfMonths: 1
-                })
-                .on("change", function() {
-                    to.datepicker("option", "minDate", getDate(this));
-                }),
-                to = $("#to").datepicker({
-                    defaultDate: "+1w",
-                    changeMonth: true,
-                    numberOfMonths: 1
-                })
-                .on("change", function() {
-                    from.datepicker("option", "maxDate", getDate(this));
-                });
-
-            function getDate(element) {
-                var date;
-                try {
-                    date = $.datepicker.parseDate(dateFormat, element.value);
-                } catch (error) {
-                    date = null;
-                }
-
-                return date;
-            }
-            $("#berdasarkantanggal").click(function() {
-                $(".fromto").show();
-            });
-            $("#semuadata").click(function() {
-                $(".fromto").hide();
-            });
-        });
-    </script>
-
-
 </body>
 
 </html>
