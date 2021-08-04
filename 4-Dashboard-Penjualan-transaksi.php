@@ -17,8 +17,8 @@ if(empty(query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LI
 else{
     $lastkodetransaksi = (int) explode("-",query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LIMIT 1")[0]['no_trans_penjualan'])[1] + 1;
 }
-$daftarbarang = query("SELECT * FROM identitas_barang");
-$daftarpelanggan = query("SELECT * FROM pelanggan");
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0");
+$daftarpelanggan = query("SELECT * FROM pelanggan WHERE deleted = 0");
 $daftarbarangjs = json_encode($daftarbarang);
 
 

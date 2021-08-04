@@ -9,7 +9,7 @@ if( !isset($_SESSION["login"]) ) {
 }
 
 require 'functions/functions-belibarang.php';
-$daftarbarang = query("SELECT * FROM identitas_barang");
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0");
 
 
 

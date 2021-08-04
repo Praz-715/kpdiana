@@ -8,7 +8,7 @@ if( !isset($_SESSION["login"]) ) {
 }
 
 require 'functions/functions-belibarang.php';
-$daftarbarang = query("SELECT * FROM identitas_barang");
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0");
 $lastkodebarang = query("SELECT * FROM identitas_barang ORDER BY Kode_Barang DESC LIMIT 1")[0];
 $lastkodebarang = $lastkodebarang['Kode_Barang'];
 $lastkodebarang = (int) explode("-",$lastkodebarang)[1] + 1;

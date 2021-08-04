@@ -23,7 +23,7 @@ function tambahbelibarang($data) {
 
 	$query = "INSERT INTO identitas_barang
 				VALUES
-			  ('$kodebarang', '$namabarang', '$unit', '$hargabeli', '$hargajual', null, null)
+			  ('$kodebarang', '$namabarang', '$unit', '$hargabeli', '$hargajual', null, null ,0)
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);
@@ -33,7 +33,7 @@ function tambahbelibarang($data) {
 
 function hapusbarang($kodebarang) {
 	global $conn;
-	$query = "DELETE FROM identitas_barang WHERE Kode_Barang = '$kodebarang'";
+	$query = "UPDATE identitas_barang SET deleted = 1 WHERE Kode_Barang = '$kodebarang'";
 	// var_dump($query);die;
 	mysqli_query($conn, $query);
 	return mysqli_affected_rows($conn);

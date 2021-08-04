@@ -18,7 +18,7 @@ else{
     $lastkodetransaksi = (int) explode("-",query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1")[0]['kode_trans_masuk'])[1] + 1;
     
 }
-$daftarbarang = query("SELECT * FROM identitas_barang");
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0");
 $daftarbarangjs = json_encode($daftarbarang);
 
 
