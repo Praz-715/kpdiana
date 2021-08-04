@@ -8,7 +8,6 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 
-
 // $_SESSION['data']=  null;
 require 'functions/functions-pelanggan.php';
 // var_dump(query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1"));die;

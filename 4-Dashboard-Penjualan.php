@@ -2,12 +2,11 @@
 
 
 session_start();
-$_SESSION['data'] == null;
 if( !isset($_SESSION["login"]) ) {
 	header("Location: login.php");
 	exit;
 }
-
+unset($_SESSION['data']);
 require 'functions/functions-pelanggan.php';
 
 $daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");
