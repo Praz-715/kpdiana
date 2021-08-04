@@ -8,7 +8,6 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 
-session_start();
 
 // $_SESSION['data']=  null;
 require 'functions/functions-pelanggan.php';
@@ -112,7 +111,6 @@ getTotal();
 
 // echo json_encode($_SESSION['data']);die;
 // var_dump(query("SELECT Quantity from identitas_barang WHERE Kode_Barang = 'BR-1'")[0]['Quantity']);die;
-
 ?>
 
 

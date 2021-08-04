@@ -24,7 +24,7 @@ function tambahpelanggan($data) {
 
 	$query = "INSERT INTO pelanggan
 				VALUES
-			  ('$kodepelanggan', '$nama', '$alamat', '$kota', '$email', '$telepon')
+			  ('$kodepelanggan', '$nama', '$alamat', '$kota', '$email', '$telepon', '0')
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);
@@ -34,7 +34,7 @@ function tambahpelanggan($data) {
 
 function hapuspelanggan($kodepelanggan) {
 	global $conn;
-	$query = "DELETE FROM pelanggan WHERE Kode_Pelanggan = '$kodepelanggan'";
+	$query = "UPDATE pelanggan SET deleted = 1 WHERE Kode_Pelanggan = '$kodepelanggan'";
 	// var_dump($query);die;
 	mysqli_query($conn, $query);
 	return mysqli_affected_rows($conn);

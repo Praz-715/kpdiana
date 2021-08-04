@@ -2,7 +2,7 @@
 
 
 session_start();
-
+$_SESSION['data'] == null;
 if( !isset($_SESSION["login"]) ) {
 	header("Location: login.php");
 	exit;
