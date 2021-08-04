@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Agu 2021 pada 15.50
+-- Waktu pembuatan: 04 Agu 2021 pada 16.24
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.11
 
@@ -90,19 +90,20 @@ CREATE TABLE `identitas_barang` (
   `Harga_Beli` bigint(20) NOT NULL,
   `Harga_Jual` bigint(20) NOT NULL,
   `Quantity` bigint(20) DEFAULT NULL,
-  `Total_Quantity` bigint(20) DEFAULT NULL
+  `Total_Quantity` bigint(20) DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `identitas_barang`
 --
 
-INSERT INTO `identitas_barang` (`Kode_Barang`, `Nama_Barang`, `Unit`, `Harga_Beli`, `Harga_Jual`, `Quantity`, `Total_Quantity`) VALUES
-('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 32, 12),
-('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 93, 30),
-('BR-3', 'sandal', 'Pcs', 3500, 5000, 42, NULL),
-('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, 14, NULL),
-('BR-6', 'Topi', 'Pcs', 45000, 55000, 0, NULL);
+INSERT INTO `identitas_barang` (`Kode_Barang`, `Nama_Barang`, `Unit`, `Harga_Beli`, `Harga_Jual`, `Quantity`, `Total_Quantity`, `deleted`) VALUES
+('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 32, 12, 0),
+('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 93, 30, 0),
+('BR-3', 'sandal', 'Pcs', 3500, 5000, 42, NULL, 0),
+('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, 14, NULL, 0),
+('BR-6', 'Topi', 'Pcs', 45000, 55000, 0, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +141,8 @@ CREATE TABLE `pelanggan` (
 INSERT INTO `pelanggan` (`Kode_Pelanggan`, `Nama_Pelanggan`, `Alamat_Pelanggan`, `Kota_Pelanggan`, `Email_Pelanggan`, `Telp_Pelanggan`, `deleted`) VALUES
 ('PLG-1', 'Fortuna', 'Jl. Moh. Kahfi 1 No.1, RT.9/RW.4, Cipedak, Jagakar', 'Jakarta Selatan', 'Fortuna_Swalayan@gmail.com', '(021) 78885739', 0),
 ('PLG-3', 'Devi', 'Jl. Baru kemarin jadi', 'Jakarta Pusat', 'devi@mail.on.com', '085000000', 0),
-('PLG-4', 'a', 'a', 'Jakarta Barat', 'a@a.com', '1', 1);
+('PLG-4', 'a', 'a', 'Jakarta Barat', 'a@a.com', '1', 1),
+('PLG-5', 'aku sayang kamu', '123456', 'Jakarta Barat', 'a@a.com', '12345', 0);
 
 -- --------------------------------------------------------
 
