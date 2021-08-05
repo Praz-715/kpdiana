@@ -7,8 +7,6 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 
-session_start();
-
 // $_SESSION['data']=  null;
 require 'functions/functions-penjualan.php';
 if(empty(query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LIMIT 1"))){
@@ -17,11 +15,11 @@ if(empty(query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LI
 else{
     $lastkodetransaksi = (int) explode("-",query("SELECT * FROM data_penjualan ORDER BY no_trans_penjualan DESC LIMIT 1")[0]['no_trans_penjualan'])[1] + 1;
 }
-$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0");
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0 AND Quantity IS NOT NULL");
 $daftarpelanggan = query("SELECT * FROM pelanggan WHERE deleted = 0");
 $daftarbarangjs = json_encode($daftarbarang);
 
-
+// die;
 function getTotal(){
     if(isset($_SESSION['data']['isi'])){
 
@@ -72,7 +70,8 @@ if(isset($_POST['btnhapus'])){
 }
 if(isset($_POST['hapussemua'])){
     // echo json_encode($_SESSION['data']);die;
-    array_splice($_SESSION['data']['isi'], 0, count($_SESSION['data']['isi']));
+    // array_splice($_SESSION['data']['isi'], 0, count($_SESSION['data']['isi']));
+    $_SESSION['data'] = null;
     getTotal();
 
 }
@@ -110,13 +109,10 @@ if(isset($_POST['simpantransaksi'])){
 	}
 }
 
-getTotal();
+if(!is_null($_SESSION['data'])){
+    getTotal();
+}
 // die;
-// die;
-// var_dump(array_search("BR-2", $a)) ;die;
-// echo json_encode($_SESSION['data']);die;
-// echo json_encode($_SESSION['data']);die;
-// var_dump(array_search("BR-1", array_column($a, "barang") )) ;die;
 
 ?>
 
@@ -328,7 +324,7 @@ getTotal();
                                                     <th>Unit</th>
                                                     <th>Harga Unit</th>
                                                     <th>Harga Total</th>
-                                                    <th><button class="btn" name="hapussemua" type="submit">Hapus Semua</button></a></th>
+                                                    <th><button class="btn" name="hapussemua" type="submit" <?php if(is_null($_SESSION['data'])) echo 'disabled'; ?> >Hapus Semua</button></a></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -424,6 +420,13 @@ getTotal();
             $('#qt').change(function(){
                 var qt = this.value;
                 var subharga = $('#subharga').val();
+                var stok = $('#stok').val();
+
+                if(qt > stok){
+                    $('#qt').val(stok);
+                    alert("Quantity tidak boleh melebihi stok");
+                }
+
                 // alert(subharga);
                 $('#harga').val(qt * subharga);
             });

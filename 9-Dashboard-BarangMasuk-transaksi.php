@@ -8,6 +8,8 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 
+// var_dump(is_null($_SESSION['data']));die;
+
 // $_SESSION['data']=  null;
 require 'functions/functions-pelanggan.php';
 // var_dump(query("SELECT * FROM barang_masuk ORDER BY kode_trans_masuk DESC LIMIT 1"));die;
@@ -25,6 +27,7 @@ $daftarbarangjs = json_encode($daftarbarang);
 
 function getTotal(){
     if(isset($_SESSION['data']['isi'])){
+        $_SESSION['data']['total'] = 0;
 
         $_SESSION['data']['total'] = 0;
         for($i=0;$i<count($_SESSION['data']['isi']);$i++){
@@ -36,8 +39,9 @@ function getTotal(){
 }
 
 if(isset($_POST['add'])){
-
+    // var_dump($_SESSION['data']);die;
     if(is_null($_SESSION['data'])){
+        // var_dump($_SESSION['data']);die;
         $_SESSION['data']['isi'][] = $_POST;
         $_SESSION['data']['total'] = (int)$_POST['harga'];
         getTotal();
@@ -51,7 +55,7 @@ if(isset($_POST['add'])){
             getTotal();
         }
 
-        getTotal();  
+        // getTotal();  
     }
     // echo json_encode($_SESSION['data']);die;
     // echo $find;die;
@@ -69,7 +73,8 @@ if(isset($_POST['btnhapus'])){
 }
 if(isset($_POST['hapussemua'])){
     // echo json_encode($_SESSION['data']);die;
-    array_splice($_SESSION['data']['isi'], 0, count($_SESSION['data']['isi']));
+    // array_splice($_SESSION['data']['isi'], 0, count($_SESSION['data']['isi']));
+    $_SESSION['data'] = null;
     getTotal();
 
 }
@@ -105,11 +110,12 @@ if(isset($_POST['simpantransaksi'])){
 	}
 }
 
-getTotal();
+
+if(!is_null($_SESSION['data'])){
+    getTotal();
+}
 // die;
 
-// echo json_encode($_SESSION['data']);die;
-// var_dump(query("SELECT Quantity from identitas_barang WHERE Kode_Barang = 'BR-1'")[0]['Quantity']);die;
 ?>
 
 
@@ -312,7 +318,7 @@ getTotal();
                                                     <th>Unit</th>
                                                     <th>Harga Unit</th>
                                                     <th>Harga Total</th>
-                                                    <th><button class="btn" name="hapussemua" type="submit">Hapus Semua</button></a></th>
+                                                    <th><button class="btn" name="hapussemua" type="submit" <?php if(is_null($_SESSION['data'])) echo 'disabled'; ?> >Hapus Semua</button></a></th>
                                                 </tr>
                                             </thead>
                                             <tbody>

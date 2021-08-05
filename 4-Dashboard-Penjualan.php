@@ -7,6 +7,7 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 unset($_SESSION['data']);
+$_SESSION['data'] = null;
 require 'functions/functions-pelanggan.php';
 
 $daftartransaksi = query("SELECT * FROM data_penjualan INNER JOIN pelanggan ON fk_pelanggan = Kode_Pelanggan");

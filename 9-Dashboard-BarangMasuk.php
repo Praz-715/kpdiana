@@ -7,6 +7,7 @@ if( !isset($_SESSION["login"]) ) {
 	exit;
 }
 unset($_SESSION['data']);
+$_SESSION['data'] = null;
 require 'functions/functions-pelanggan.php';
 
 $daftartransaksi = query("SELECT * FROM barang_masuk");
