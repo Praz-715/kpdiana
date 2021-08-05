@@ -9,9 +9,13 @@ if( !isset($_SESSION["login"]) ) {
 
 require 'functions/functions-pelanggan.php';
 $daftarpelanggan = query("SELECT * FROM pelanggan WHERE deleted = 0 ORDER BY uploaded ASC");
-$lastkodepelanggan = query("SELECT * FROM pelanggan ORDER BY uploaded DESC LIMIT 1")[0];
-$lastkodepelanggan = $lastkodepelanggan['Kode_Pelanggan'];
-$lastkodepelanggan = (int) explode("-",$lastkodepelanggan)[1] + 1;
+$lastkodepelanggan = query("SELECT * FROM pelanggan ORDER BY uploaded DESC LIMIT 1");
+if (empty($lastkodepelanggan)){
+    $lastkodepelanggan = 1;
+}else{
+    $lastkodepelanggan = $lastkodepelanggan[0]['Kode_Pelanggan'];
+    $lastkodepelanggan = (int) explode("-",$lastkodepelanggan)[1] + 1;
+}
 
 if(isset($_POST['submit'])){
     // var_dump($_POST);die;
@@ -76,7 +80,7 @@ if(isset($_POST['edit'])){
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="index.html"><img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+                <a href="index.php"><img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
             </div>
             <div class="container-fluid">
                 <div class="navbar-btn">
@@ -149,7 +153,7 @@ if(isset($_POST['edit'])){
                             <div class="inibreadcumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="1-Dashboard-Home.php">Home</a></li>
                                         <li class="breadcrumb-item">Data Master</li>
                                         <li class="breadcrumb-item active" aria-current="page">Pelanggan</li>
                                     </ol>

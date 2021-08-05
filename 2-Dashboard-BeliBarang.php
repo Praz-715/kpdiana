@@ -8,10 +8,15 @@ if( !isset($_SESSION["login"]) ) {
 }
 
 require 'functions/functions-belibarang.php';
-$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0  ORDER BY uploaded ASC");
-$lastkodebarang = query("SELECT * FROM identitas_barang ORDER BY uploaded DESC LIMIT 1")[0];
-$lastkodebarang = $lastkodebarang['Kode_Barang'];
-$lastkodebarang = (int) explode("-",$lastkodebarang)[1] + 1;
+$daftarbarang = query("SELECT * FROM identitas_barang WHERE deleted = 0 ORDER BY uploaded ASC");
+$lastkodebarang = query("SELECT * FROM identitas_barang ORDER BY uploaded DESC LIMIT 1");
+
+if (empty($lastkodebarang)){
+    $lastkodebarang = 1;
+}else{
+    $lastkodebarang = $lastkodebarang[0]['Kode_Barang'];
+    $lastkodebarang = (int) explode("-",$lastkodebarang)[1] + 1;
+}
 
 if(isset($_POST['submit'])){
     // var_dump($_POST);die;
@@ -40,7 +45,7 @@ if(isset($_POST['edit'])){
 
 }
 // echo $daftarbarang;
-
+// die;
 ?>
 
 
@@ -77,7 +82,7 @@ if(isset($_POST['edit'])){
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="index.html"><img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+                <a href="index.php"><img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
             </div>
             <div class="container-fluid">
                 <div class="navbar-btn">
@@ -132,7 +137,7 @@ if(isset($_POST['edit'])){
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="page-profile.html" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
+                        <li><a href="page-profile.php" class=""><i class="lnr lnr-user"></i> <span>Profile</span></a></li>
                         <li><a href="logout.php" class=""><i class="lnr lnr-dice"></i> <span>Keluar</span></a></li>
                     </ul>
                 </nav>
@@ -150,7 +155,7 @@ if(isset($_POST['edit'])){
                             <div class="inibreadcumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="1-Dashboard-Home.html">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="1-Dashboard-Home.php">Home</a></li>
                                         <li class="breadcrumb-item">Data Master</li>
                                         <li class="breadcrumb-item active" aria-current="page">Barang</li>
                                     </ol>
