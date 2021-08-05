@@ -8,8 +8,8 @@ if( !isset($_SESSION["login"]) ) {
 }
 
 require 'functions/functions-pelanggan.php';
-$daftarpelanggan = query("SELECT * FROM pelanggan WHERE deleted = 0");
-$lastkodepelanggan = query("SELECT * FROM pelanggan ORDER BY Kode_Pelanggan DESC LIMIT 1")[0];
+$daftarpelanggan = query("SELECT * FROM pelanggan WHERE deleted = 0 ORDER BY uploaded ASC");
+$lastkodepelanggan = query("SELECT * FROM pelanggan ORDER BY uploaded DESC LIMIT 1")[0];
 $lastkodepelanggan = $lastkodepelanggan['Kode_Pelanggan'];
 $lastkodepelanggan = (int) explode("-",$lastkodepelanggan)[1] + 1;
 

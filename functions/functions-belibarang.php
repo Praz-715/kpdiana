@@ -23,7 +23,7 @@ function tambahbelibarang($data) {
 
 	$query = "INSERT INTO identitas_barang
 				VALUES
-			  ('$kodebarang', '$namabarang', '$unit', '$hargabeli', '$hargajual', null, null ,0)
+			  ('$kodebarang', '$namabarang', '$unit', '$hargabeli', '$hargajual', null, null, CURRENT_TIMESTAMP() ,0)
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);

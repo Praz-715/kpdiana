@@ -24,7 +24,7 @@ function tambahpelanggan($data) {
 
 	$query = "INSERT INTO pelanggan
 				VALUES
-			  ('$kodepelanggan', '$nama', '$alamat', '$kota', '$email', '$telepon', '0')
+			  ('$kodepelanggan', '$nama', '$alamat', '$kota', '$email', '$telepon', CURRENT_TIMESTAMP(), '0')
 			";
 			// var_dump($query);die;
 	mysqli_query($conn, $query);
