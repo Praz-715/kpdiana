@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Agu 2021 pada 16.24
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.4.11
+-- Generation Time: Aug 05, 2021 at 08:04 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang_masuk`
+-- Table structure for table `barang_masuk`
 --
 
 CREATE TABLE `barang_masuk` (
@@ -32,12 +33,12 @@ CREATE TABLE `barang_masuk` (
   `tgl_trans_masuk` date NOT NULL,
   `time` time NOT NULL,
   `nama_tempat_beli` varchar(30) NOT NULL,
-  `isi` longtext DEFAULT NULL,
+  `isi` longtext,
   `grand_total` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `barang_masuk`
+-- Dumping data for table `barang_masuk`
 --
 
 INSERT INTO `barang_masuk` (`kode_trans_masuk`, `tgl_trans_masuk`, `time`, `nama_tempat_beli`, `isi`, `grand_total`) VALUES
@@ -51,7 +52,7 @@ INSERT INTO `barang_masuk` (`kode_trans_masuk`, `tgl_trans_masuk`, `time`, `nama
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `data_penjualan`
+-- Table structure for table `data_penjualan`
 --
 
 CREATE TABLE `data_penjualan` (
@@ -59,14 +60,14 @@ CREATE TABLE `data_penjualan` (
   `tgl_trans_penjualan` date NOT NULL,
   `time` time NOT NULL,
   `fk_pelanggan` varchar(30) NOT NULL,
-  `isi` longtext DEFAULT NULL,
+  `isi` longtext,
   `total` bigint(20) NOT NULL,
   `biaya_kirim` bigint(20) NOT NULL,
   `grand_total` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `data_penjualan`
+-- Dumping data for table `data_penjualan`
 --
 
 INSERT INTO `data_penjualan` (`no_trans_penjualan`, `tgl_trans_penjualan`, `time`, `fk_pelanggan`, `isi`, `total`, `biaya_kirim`, `grand_total`) VALUES
@@ -80,7 +81,7 @@ INSERT INTO `data_penjualan` (`no_trans_penjualan`, `tgl_trans_penjualan`, `time
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `identitas_barang`
+-- Table structure for table `identitas_barang`
 --
 
 CREATE TABLE `identitas_barang` (
@@ -91,24 +92,30 @@ CREATE TABLE `identitas_barang` (
   `Harga_Jual` bigint(20) NOT NULL,
   `Quantity` bigint(20) DEFAULT NULL,
   `Total_Quantity` bigint(20) DEFAULT NULL,
-  `deleted` tinyint(1) NOT NULL DEFAULT 0
+  `uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `identitas_barang`
+-- Dumping data for table `identitas_barang`
 --
 
-INSERT INTO `identitas_barang` (`Kode_Barang`, `Nama_Barang`, `Unit`, `Harga_Beli`, `Harga_Jual`, `Quantity`, `Total_Quantity`, `deleted`) VALUES
-('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 32, 12, 0),
-('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 93, 30, 0),
-('BR-3', 'sandal', 'Pcs', 3500, 5000, 42, NULL, 0),
-('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, 14, NULL, 0),
-('BR-6', 'Topi', 'Pcs', 45000, 55000, 0, NULL, 1);
+INSERT INTO `identitas_barang` (`Kode_Barang`, `Nama_Barang`, `Unit`, `Harga_Beli`, `Harga_Jual`, `Quantity`, `Total_Quantity`, `uploaded`, `deleted`) VALUES
+('BR-1', 'Bawang Merah', 'Kg', 3000, 4000, 32, 12, '2021-08-05 12:52:25', 0),
+('BR-10', '3333', 'Kg', 333, 33333, NULL, NULL, '2021-08-05 13:00:27', 0),
+('BR-11', 'asdfg', 'Kg', 444, 4444, NULL, NULL, '2021-08-05 13:02:45', 0),
+('BR-2', 'Bawang Putih', 'Kg', 5000, 5500, 93, 30, '2021-08-05 12:52:25', 0),
+('BR-3', 'sandal', 'Pcs', 3500, 5000, 42, NULL, '2021-08-05 12:52:25', 0),
+('BR-5', 'jepit rambut', 'Pcs', 2500, 4500, 14, NULL, '2021-08-05 12:52:25', 0),
+('BR-6', 'Topi', 'Pcs', 45000, 55000, 0, NULL, '2021-08-05 12:52:25', 1),
+('BR-7', 'heheheheheh', 'Kg', 2, 2, NULL, NULL, '2021-08-05 12:56:15', 0),
+('BR-8', 'asd', 'Kg', 333, 3333, NULL, NULL, '2021-08-05 13:00:09', 0),
+('BR-9', '333', 'Pcs', 333, 333, NULL, NULL, '2021-08-05 13:00:16', 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `identitas_usaha`
+-- Table structure for table `identitas_usaha`
 --
 
 CREATE TABLE `identitas_usaha` (
@@ -121,7 +128,7 @@ CREATE TABLE `identitas_usaha` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggan`
+-- Table structure for table `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -131,23 +138,24 @@ CREATE TABLE `pelanggan` (
   `Kota_Pelanggan` varchar(30) NOT NULL,
   `Email_Pelanggan` varchar(30) DEFAULT NULL,
   `Telp_Pelanggan` varchar(30) DEFAULT NULL,
-  `deleted` tinyint(1) NOT NULL DEFAULT 0
+  `uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pelanggan`
+-- Dumping data for table `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`Kode_Pelanggan`, `Nama_Pelanggan`, `Alamat_Pelanggan`, `Kota_Pelanggan`, `Email_Pelanggan`, `Telp_Pelanggan`, `deleted`) VALUES
-('PLG-1', 'Fortuna', 'Jl. Moh. Kahfi 1 No.1, RT.9/RW.4, Cipedak, Jagakar', 'Jakarta Selatan', 'Fortuna_Swalayan@gmail.com', '(021) 78885739', 0),
-('PLG-3', 'Devi', 'Jl. Baru kemarin jadi', 'Jakarta Pusat', 'devi@mail.on.com', '085000000', 0),
-('PLG-4', 'a', 'a', 'Jakarta Barat', 'a@a.com', '1', 1),
-('PLG-5', 'aku sayang kamu', '123456', 'Jakarta Barat', 'a@a.com', '12345', 0);
+INSERT INTO `pelanggan` (`Kode_Pelanggan`, `Nama_Pelanggan`, `Alamat_Pelanggan`, `Kota_Pelanggan`, `Email_Pelanggan`, `Telp_Pelanggan`, `uploaded`, `deleted`) VALUES
+('PLG-1', 'Fortuna', 'Jl. Moh. Kahfi 1 No.1, RT.9/RW.4, Cipedak, Jagakar', 'Jakarta Selatan', 'Fortuna_Swalayan@gmail.com', '(021) 78885739', '2021-08-05 12:58:42', 0),
+('PLG-3', 'Devi', 'Jl. Baru kemarin jadi', 'Jakarta Pusat', 'devi@mail.on.com', '085000000', '2021-08-05 12:58:42', 0),
+('PLG-4', 'a', 'a', 'Jakarta Barat', 'a@a.com', '1', '2021-08-05 12:58:42', 1),
+('PLG-5', 'aku sayang kamu', '123456', 'Jakarta Barat', 'a@a.com', '12345', '2021-08-05 12:58:42', 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -156,11 +164,11 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `gambar` varchar(50) NOT NULL DEFAULT 'default.png',
-  `is_admin` tinyint(1) NOT NULL DEFAULT 0
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `nama`, `gambar`, `is_admin`) VALUES
@@ -171,60 +179,60 @@ INSERT INTO `user` (`id`, `email`, `password`, `nama`, `gambar`, `is_admin`) VAL
 --
 
 --
--- Indeks untuk tabel `barang_masuk`
+-- Indexes for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
   ADD PRIMARY KEY (`kode_trans_masuk`);
 
 --
--- Indeks untuk tabel `data_penjualan`
+-- Indexes for table `data_penjualan`
 --
 ALTER TABLE `data_penjualan`
   ADD PRIMARY KEY (`no_trans_penjualan`),
   ADD KEY `Nama_Pelanggan` (`fk_pelanggan`);
 
 --
--- Indeks untuk tabel `identitas_barang`
+-- Indexes for table `identitas_barang`
 --
 ALTER TABLE `identitas_barang`
   ADD PRIMARY KEY (`Kode_Barang`),
   ADD KEY `Nama_Barang` (`Nama_Barang`);
 
 --
--- Indeks untuk tabel `identitas_usaha`
+-- Indexes for table `identitas_usaha`
 --
 ALTER TABLE `identitas_usaha`
   ADD PRIMARY KEY (`Id_Usaha`);
 
 --
--- Indeks untuk tabel `pelanggan`
+-- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`Kode_Pelanggan`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `data_penjualan`
+-- Constraints for table `data_penjualan`
 --
 ALTER TABLE `data_penjualan`
   ADD CONSTRAINT `data_penjualan_ibfk_1` FOREIGN KEY (`fk_pelanggan`) REFERENCES `pelanggan` (`Kode_Pelanggan`);
