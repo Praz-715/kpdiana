@@ -422,7 +422,7 @@ if(!is_null($_SESSION['data'])){
                 var subharga = $('#subharga').val();
                 var stok = $('#stok').val();
 
-                if(qt > stok){
+                if( parseInt(qt)  > parseInt(stok) ){
                     $('#qt').val(stok);
                     alert("Quantity tidak boleh melebihi stok");
                 }
